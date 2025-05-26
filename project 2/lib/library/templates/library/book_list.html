@@ -1,0 +1,7 @@
+<!-- library/templates/library/book_list.html -->
+<h1>All Books</h1>
+<ul>
+  {% for book in books %}
+    <li>{{ book.title }} by {{ book.author }}</li>
+  {% endfor %}
+</ul>
