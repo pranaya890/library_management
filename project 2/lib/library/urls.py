@@ -12,4 +12,11 @@ urlpatterns=[
     path('reports/', views.reports, name='reports'),      # Reports
     path('login/', views.login_view, name='login'),       # Login
     path('signup/', views.signup_view, name='signup'),
+    path('logout/',views.logout_view,name='logout'),
+    path('add_member/',views.add_member,name='add_member'),
+    path('checkout_book/',views.checkout_book,name='checkout_book'),
+    path('return_book/',views.return_book,name='return_book'),
+    path('overdue_books/',views.overdue_books,name='overdue_books'),
+    path('reports/',views.reports,name='reports'),
+
 ]

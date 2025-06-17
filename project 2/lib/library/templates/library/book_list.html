@@ -1,6 +1,570 @@
-{% for book in books %}
-    <div class="book-card">
-        <h3>{{ book.title }}</h3>
-        <p>{{ book.author }}</p>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book List - Library Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    .search-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .search-form {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+    }
+    
+    .search-input {
+        flex: 2;
+        min-width: 250px;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .filter-select {
+        padding: 12px 15px;
+        border: none;
+        border-radius: 25px;
+        font-size: 14px;
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        min-width: 120px;
+    }
+    
+    .filter-select:focus {
+        outline: none;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .search-btn {
+        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(238, 90, 36, 0.3);
+    }
+    
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(238, 90, 36, 0.4);
+    }
+    
+    .clear-btn {
+        background: rgba(255,255,255,0.2);
+        color: white;
+        border: 2px solid rgba(255,255,255,0.3);
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .clear-btn:hover {
+        background: rgba(255,255,255,0.3);
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+    
+    .results-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding: 1rem 0;
+        border-bottom: 3px solid #f8f9fa;
+    }
+    
+    .results-count {
+        font-size: 1.1rem;
+        color: #6c757d;
+        font-weight: 500;
+    }
+    
+    .add-book-btn {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+    
+    .add-book-btn:hover {
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+    }
+    
+    .books-table {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+    
+    .table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f8f9fa;
+    }
+    
+    .table tbody tr:hover {
+        background: linear-gradient(135deg, #f8f9ff 0%, #f0f0ff 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+        border: none;
+    }
+    
+    .book-title {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 1.1rem;
+    }
+    
+    .book-author {
+        color: #7f8c8d;
+        font-style: italic;
+    }
+    
+    .book-isbn {
+        font-family: 'Courier New', monospace;
+        background: #f8f9fa;
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+    }
+    
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .status-available {
+        background: linear-gradient(45deg, #d4edda, #c3e6cb);
+        color: #155724;
+    }
+    
+    .status-unavailable {
+        background: linear-gradient(45deg, #f8d7da, #f5c6cb);
+        color: #721c24;
+    }
+    
+    .copies-info {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-top: 2px;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    
+    .btn-action {
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .btn-view {
+        background: linear-gradient(45deg, #17a2b8, #138496);
+        color: white;
+    }
+    
+    .btn-edit {
+        background: linear-gradient(45deg, #ffc107, #e0a800);
+        color: #212529;
+    }
+    
+    .btn-delete {
+        background: linear-gradient(45deg, #dc3545, #c82333);
+        color: white;
+    }
+    
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .no-results {
+        text-align: center;
+        padding: 3rem;
+        color: #6c757d;
+    }
+    
+    .no-results-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+    
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .page-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+    
+    .active-filters {
+        background: rgba(255,255,255,0.1);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        color: white;
+        font-size: 0.9rem;
+    }
+    
+    .filter-tag {
+        display: inline-block;
+        background: rgba(255,255,255,0.2);
+        padding: 4px 12px;
+        border-radius: 15px;
+        margin: 2px;
+        backdrop-filter: blur(5px);
+    }
+    
+    @media (max-width: 768px) {
+        .search-form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .search-input, .filter-select {
+            min-width: auto;
+            width: 100%;
+        }
+        
+        .results-header {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .table-responsive {
+            font-size: 0.9rem;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">📚 Library Catalog</h1>
+        <p class="page-subtitle">Discover and manage your book collection</p>
     </div>
-{% endfor %}
+
+    <!-- Search Section -->
+    <div class="search-container">
+        <form method="get" class="search-form">
+            <input 
+                type="text" 
+                name="search" 
+                class="search-input"
+                placeholder="Search by title, author, ISBN, or publisher..." 
+                value="{{ search_query }}"
+                autocomplete="off"
+            >
+            
+            <select name="category" class="filter-select">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                    {% if category %}
+                        <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>
+                            {{ category }}
+                        </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+            <select name="availability" class="filter-select">
+                <option value="">All Books</option>
+                <option value="available" {% if selected_availability == 'available' %}selected{% endif %}>
+                    Available
+                </option>
+                <option value="unavailable" {% if selected_availability == 'unavailable' %}selected{% endif %}>
+                    Unavailable
+                </option>
+            </select>
+            
+            <button type="submit" class="search-btn">
+                🔍 Search
+            </button>
+            
+            {% if search_query or selected_category or selected_availability %}
+                <a href="{% url 'book_list' %}" class="clear-btn">
+                    ✕ Clear All
+                </a>
+            {% endif %}
+        </form>
+        
+        <!-- Active Filters Display -->
+        {% if search_query or selected_category or selected_availability %}
+            <div class="active-filters">
+                <strong>Active filters:</strong>
+                {% if search_query %}
+                    <span class="filter-tag">Search: "{{ search_query }}"</span>
+                {% endif %}
+                {% if selected_category %}
+                    <span class="filter-tag">Category: {{ selected_category }}</span>
+                {% endif %}
+                {% if selected_availability %}
+                    <span class="filter-tag">Status: {{ selected_availability|title }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Results Header -->
+    <div class="results-header">
+        <div class="results-count">
+            {% if search_query or selected_category or selected_availability %}
+                Found {{ books.count }} book{{ books.count|pluralize }}
+                {% if search_query %}for "<strong>{{ search_query }}</strong>"{% endif %}
+            {% else %}
+                Showing {{ books.count }} book{{ books.count|pluralize }} in total
+            {% endif %}
+        </div>
+        <a href="{% url 'add_book' %}" class="add-book-btn">
+            ➕ Add New Book
+        </a>
+    </div>
+
+    <!-- Books Table -->
+    {% if books %}
+        <div class="books-table">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Publisher</th>
+                            <th>Category</th>
+                            <th>ISBN</th>
+                            <th>Publication Year</th>
+                            <th>Availability</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                        <tr>
+                            <td>
+                                <div class="book-title">{{ book.title }}</div>
+                                {% if book.subtitle %}
+                                    <small class="text-muted">{{ book.subtitle }}</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="book-author">{{ book.author.name }}</div>
+                            </td>
+                            <td>{{ book.publisher.name }}</td>
+                            <td>
+                                {% if book.category %}
+                                    <span class="badge badge-secondary">{{ book.category }}</span>
+                                {% else %}
+                                    <span class="text-muted">No category</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="book-isbn">{{ book.isbn|default:"N/A" }}</span>
+                            </td>
+                            <td>{{ book.publication_year|default:"Unknown" }}</td>
+                            <td>
+                                {% if book.available_copies > 0 %}
+                                    <span class="status-badge status-available">Available</span>
+                                    <div class="copies-info">{{ book.available_copies }} copies available</div>
+                                {% else %}
+                                    <span class="status-badge status-unavailable">Unavailable</span>
+                                    <div class="copies-info">All copies borrowed</div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{% url 'book_detail' book.pk %}" class="btn-action btn-view" title="View Details">
+                                        👁️ View
+                                    </a>
+                                    <a href="{% url 'edit_book' book.pk %}" class="btn-action btn-edit" title="Edit Book">
+                                        ✏️ Edit
+                                    </a>
+                                    <a href="{% url 'delete_book' book.pk %}" class="btn-action btn-delete" title="Delete Book" onclick="return confirm('Are you sure you want to delete this book?')">
+                                        🗑️ Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="books-table">
+            <div class="no-results">
+                <div class="no-results-icon">📚</div>
+                {% if search_query or selected_category or selected_availability %}
+                    <h3>No books found</h3>
+                    <p>No books match your current search and filter criteria.</p>
+                    <a href="{% url 'book_list' %}" class="btn btn-primary mt-3">View All Books</a>
+                {% else %}
+                    <h3>No books in library</h3>
+                    <p>Your library is empty. Start building your collection!</p>
+                    <a href="{% url 'add_book' %}" class="btn btn-success mt-3">Add Your First Book</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Pagination (if you add it later) -->
+    {% comment %}
+    {% if is_paginated %}
+        <nav aria-label="Books pagination">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_availability %}&availability={{ selected_availability }}{% endif %}">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_availability %}&availability={{ selected_availability }}{% endif %}">Previous</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+                
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_availability %}&availability={{ selected_availability }}{% endif %}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_availability %}&availability={{ selected_availability }}{% endif %}">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+    {% endcomment %}
+    
+</div>
+
+<script>
+    // Add some interactive features
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-focus search input
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput && !searchInput.value) {
+            searchInput.focus();
+        }
+        
+        // Add loading state to search button
+        const searchForm = document.querySelector('.search-form');
+        const searchBtn = document.querySelector('.search-btn');
+        
+        searchForm.addEventListener('submit', function() {
+            searchBtn.innerHTML = '⏳ Searching...';
+            searchBtn.disabled = true;
+        });
+        
+        // Add smooth scrolling to results
+        if (window.location.search.includes('search=') || 
+            window.location.search.includes('category=') || 
+            window.location.search.includes('availability=')) {
+            document.querySelector('.results-header').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+        
+        // Auto-submit form when filters change (optional)
+        const filterSelects = document.querySelectorAll('.filter-select');
+        filterSelects.forEach(select => {
+            select.addEventListener('change', function() {
+                // Uncomment the line below if you want auto-submit on filter change
+                // searchForm.submit();
+            });
+        });
+    });
+</script>
+{% endblock %}
