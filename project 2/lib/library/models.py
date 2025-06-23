@@ -729,12 +729,8 @@ class Member(models.Model):
     @property
     def current_borrowed_books_count(self):
         """Get count of currently borrowed books"""
-        from .models import Transaction  # Import here to avoid circular import
-        return Transaction.objects.filter(
-            member=self,
-            transaction_type='BORROW',
-            return_date__isnull=True
-        ).count()
+        # Simply count transactions where return_date is null (not returned yet)
+        return self.transactions.filter(return_date__isnull=True).count()
     
     @property
     def can_borrow_more_books(self):

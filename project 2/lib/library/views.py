@@ -387,17 +387,19 @@ def book_list(request):
     """
     Display list of all books with search and filter functionality
     """
-    books = Book.objects.all().select_related('author', 'publisher')
+    # FIX 1: Change select_related('author') to prefetch_related('authors')
+    books = Book.objects.all().select_related('publisher', 'category').prefetch_related('authors')
     
     # Search functionality
     search_query = request.GET.get('search')
     if search_query:
+        # FIX 2: Change author__name to authors__name for ManyToMany field
         books = books.filter(
             Q(title__icontains=search_query) |
-            Q(author__name__icontains=search_query) |
+            Q(authors__name__icontains=search_query) |
             Q(isbn__icontains=search_query) |
             Q(publisher__name__icontains=search_query)
-        )
+        ).distinct()  # Add distinct() to avoid duplicates from ManyToMany joins
     
     # Filter by availability
     availability = request.GET.get('availability')
@@ -409,10 +411,11 @@ def book_list(request):
     # Filter by category/genre
     category = request.GET.get('category')
     if category:
-        books = books.filter(category=category)
+        books = books.filter(category__name=category)  # Assuming category is a ForeignKey
     
     # Get unique categories for filter dropdown
-    categories = Book.objects.values_list('category', flat=True).distinct()
+    # FIX 3: Get category names properly
+    categories = Book.objects.select_related('category').exclude(category__isnull=True).values_list('category__name', flat=True).distinct()
     
     context = {
         'books': books,
@@ -487,16 +490,20 @@ def member_list(request):
     """
     Display list of all library members
     """
-    members = Member.objects.all().annotate(
-        books_borrowed=Count('transaction', filter=Q(transaction__return_date__isnull=True))
-    )
+    # Get all members with related user data
+    members = Member.objects.select_related('user').all()
+    
+    # Calculate statistics
+    total_members = members.count()
+    active_members = members.filter(status='ACTIVE').count()
     
     # Search functionality
     search_query = request.GET.get('search')
     if search_query:
         members = members.filter(
-            Q(name__icontains=search_query) |
-            Q(email__icontains=search_query) |
+            Q(user__first_name__icontains=search_query) |
+            Q(user__last_name__icontains=search_query) |
+            Q(user__email__icontains=search_query) |
             Q(phone__icontains=search_query) |
             Q(member_id__icontains=search_query)
         )
@@ -504,9 +511,12 @@ def member_list(request):
     context = {
         'members': members,
         'search_query': search_query,
+        'total_members': total_members,
+        'active_members': active_members,
     }
     
     return render(request, 'library/member_list.html', context)
+
 
 def member_detail(request, pk):
     """

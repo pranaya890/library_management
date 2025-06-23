@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'library\base.html' %}
 {% load static %}
 
 {% block title %}Book List - Library Management{% endblock %}
@@ -372,7 +372,7 @@
             </button>
             
             {% if search_query or selected_category or selected_availability %}
-                <a href="{% url 'book_list' %}" class="clear-btn">
+                <a href="{% url 'library:book_list' %}" class="clear-btn">
                     ✕ Clear All
                 </a>
             {% endif %}
@@ -405,7 +405,7 @@
                 Showing {{ books.count }} book{{ books.count|pluralize }} in total
             {% endif %}
         </div>
-        <a href="{% url 'add_book' %}" class="add-book-btn">
+        <a href="{% url 'library:add_book' %}" class="add-book-btn">
             ➕ Add New Book
         </a>
     </div>
@@ -437,7 +437,14 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <div class="book-author">{{ book.author.name }}</div>
+                                <td>
+                                    <div class="book-author">
+                                        {% for author in book.authors.all %}
+                                            {{ author.name }}{% if not forloop.last %}, {% endif %}
+                                        {% empty %}
+                                            Unknown Author
+                                        {% endfor %}
+                                    </div>
                             </td>
                             <td>{{ book.publisher.name }}</td>
                             <td>
@@ -462,15 +469,18 @@
                             </td>
                             <td>
                                 <div class="action-buttons">
-                                    <a href="{% url 'book_detail' book.pk %}" class="btn-action btn-view" title="View Details">
+                                    <a href="{% url 'library:book_detail' book.pk %}" class="btn-action btn-view" title="View Details">
                                         👁️ View
                                     </a>
-                                    <a href="{% url 'edit_book' book.pk %}" class="btn-action btn-edit" title="Edit Book">
+                                    {% comment %}
+                                    <a href="{% url 'library:edit_book' book.pk %}" class="btn-action btn-edit" title="Edit Book">
                                         ✏️ Edit
                                     </a>
-                                    <a href="{% url 'delete_book' book.pk %}" class="btn-action btn-delete" title="Delete Book" onclick="return confirm('Are you sure you want to delete this book?')">
+                                    
+                                    <a href="{% url 'library:delete_book' book.pk %}" class="btn-action btn-delete" title="Delete Book" onclick="return confirm('Are you sure you want to delete this book?')">
                                         🗑️ Delete
                                     </a>
+                                    {% endcomment %}
                                 </div>
                             </td>
                         </tr>
@@ -486,11 +496,11 @@
                 {% if search_query or selected_category or selected_availability %}
                     <h3>No books found</h3>
                     <p>No books match your current search and filter criteria.</p>
-                    <a href="{% url 'book_list' %}" class="btn btn-primary mt-3">View All Books</a>
+                    <a href="{% url 'library:book_list' %}" class="btn btn-primary mt-3">View All Books</a>
                 {% else %}
                     <h3>No books in library</h3>
                     <p>Your library is empty. Start building your collection!</p>
-                    <a href="{% url 'add_book' %}" class="btn btn-success mt-3">Add Your First Book</a>
+                    <a href="{% url 'library:add_book' %}" class="btn btn-success mt-3">Add Your First Book</a>
                 {% endif %}
             </div>
         </div>
