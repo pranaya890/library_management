@@ -1,0 +1,363 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+
+{% block title %}
+Issue Book
+{% endblock %}
+
+{% block css %}
+<style>
+    :root {
+        --nepal-crimson: #DC143C;
+        --nepal-blue: #003893;
+        --nepal-white: #FFFFFF;
+        --nepal-light-crimson: #E6476F;
+        --nepal-dark-blue: #002570;
+        --nepal-gold: #FFD700;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .nepal-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        padding: 3rem;
+        margin: 2rem auto;
+        backdrop-filter: blur(10px);
+        border: 2px solid var(--nepal-gold);
+        max-width: 600px;
+    }
+
+    .nepal-header {
+        background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nepal-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.1) 10px,
+            rgba(255, 255, 255, 0.1) 20px
+        );
+        animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) translateY(-100%); }
+        100% { transform: translateX(100%) translateY(100%); }
+    }
+
+    .nepal-header h1 {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .nepal-flag-icon {
+        font-size: 2rem;
+        color: var(--nepal-gold);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .form-group label {
+        color: var(--nepal-dark-blue);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+    }
+
+    .form-control, .form-select {
+        border: 2px solid rgba(0, 56, 147, 0.2);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: var(--nepal-white);
+        color: var(--nepal-dark-blue);
+        width: 100%;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--nepal-crimson);
+        box-shadow: 0 0 0 0.2rem rgba(220, 20, 60, 0.25);
+        background: var(--nepal-white);
+        outline: none;
+    }
+
+    .form-control:hover, .form-select:hover {
+        border-color: var(--nepal-light-crimson);
+    }
+
+    .nepal-btn-issue {
+        background: linear-gradient(135deg, var(--nepal-crimson), var(--nepal-light-crimson));
+        border: 2px solid var(--nepal-gold);
+        border-radius: 25px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--nepal-white);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        width: 100%;
+        margin-top: 1rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .nepal-btn-issue:hover {
+        background: linear-gradient(135deg, var(--nepal-blue), var(--nepal-dark-blue));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 56, 147, 0.4);
+        color: var(--nepal-white);
+        border-color: white;
+    }
+
+    .nepal-btn-issue:active {
+        transform: translateY(0);
+    }
+
+    /* Nepal flag decorative elements */
+    .nepal-decoration {
+        position: fixed;
+        top: 75px;
+        right: 20px;
+        width: 60px;
+        height: 80px;
+        background: var(--nepal-crimson);
+        clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
+        z-index: 1000;
+    }
+
+    .nepal-decoration::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background: var(--nepal-white);
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .nepal-decoration-left {
+        position: fixed;
+        top: 75px;
+        left: 20px;
+        width: 60px;
+        height: 80px;
+        background: var(--nepal-blue);
+        clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
+        z-index: 1000;
+    }
+
+    .nepal-decoration-left::before {
+        content: '📚';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 16px;
+    }
+
+    /* Form icon styling */
+    .form-group::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 45px;
+        width: 20px;
+        height: 20px;
+        background: var(--nepal-light-crimson);
+        border-radius: 50%;
+        opacity: 0.2;
+        z-index: 1;
+    }
+
+    /* Loading animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .nepal-container {
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .form-group {
+        animation: fadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .nepal-container {
+            margin: 1rem;
+            padding: 2rem 1.5rem;
+        }
+        
+        .nepal-decoration,
+        .nepal-decoration-left {
+            display: none;
+        }
+
+        .nepal-header h1 {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* Success message styling */
+    .alert-success {
+        background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), rgba(0, 56, 147, 0.1));
+        border: 2px solid var(--nepal-crimson);
+        border-radius: 15px;
+        color: var(--nepal-dark-blue);
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .mountain-decoration {
+        position: absolute;
+        top: 75px;
+        right: 20px;
+        font-size: 3rem;
+        color: var(--nepal-gold);
+        opacity: 0.3;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(1.1); }
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <!-- Nepal flag decorative elements -->
+    <div class="nepal-decoration"></div>
+    <div class="nepal-decoration-left"></div>
+    <div class="mountain-decoration">
+        <i class="fas fa-mountain"></i>
+    </div>
+
+    <div class="container nepal-container">
+        <div class="nepal-header">
+            <h1>
+                <i class="fas fa-book-reader nepal-flag-icon"></i>
+                Issue Book
+                <i class="fas fa-hand-holding-heart nepal-flag-icon"></i>
+            </h1>
+        </div>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST"> 
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                <label class="control-label">{{ field.label_tag }}</label>
+                <div class="mt-2">
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <div class="text-danger mt-1">
+                        {% for error in field.errors %}
+                            <small><i class="fas fa-exclamation-triangle me-1"></i>{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="nepal-btn-issue">
+                <i class="fas fa-book me-2"></i>Issue Book
+            </button>
+        </form>
+    </div>
+
+    {% if alert %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            alert("Book Successfully Issued.");
+            setTimeout(function() {
+                window.location.href = "/issue_book";
+            }, 100);
+        });
+    </script>
+    {% endif %}
+    
+    <script>
+        // Add form enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.form-control, .form-select').forEach(function(element) {
+                element.addEventListener('focus', function() {
+                    this.parentElement.parentElement.style.transform = 'scale(1.02)';
+                });
+                
+                element.addEventListener('blur', function() {
+                    this.parentElement.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+{% endblock %}

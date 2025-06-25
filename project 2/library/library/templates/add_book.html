@@ -1,0 +1,397 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+
+{% block title %}Library Management System{% endblock %}
+
+{% block css %}
+<style>
+    /* Nepal Flag Theme */
+    :root {
+        --nepal-blue: #003893;
+        --nepal-red: #DC143C;
+        --nepal-white: #FFFFFF;
+        --nepal-light-blue: #E6F3FF;
+        --nepal-light-red: #FFE6EA;
+        --nepal-gold: #FFD700;
+    }
+    
+    body {
+        background: linear-gradient(135deg, var(--nepal-blue) 0%, var(--nepal-red) 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        position: relative;
+    }
+    
+    /* Decorative elements inspired by Nepal flag */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 60px;
+        height: 80px;
+        background: linear-gradient(45deg, var(--nepal-blue) 50%, var(--nepal-red) 50%);
+        clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+        z-index: 1;
+        opacity: 0.3;
+    }
+    
+    .container {
+        background: var(--nepal-white);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        padding: 50px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        border: 4px solid var(--nepal-blue);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 8px;
+        background: linear-gradient(90deg, 
+            var(--nepal-blue) 0%, 
+            var(--nepal-red) 25%, 
+            var(--nepal-blue) 50%, 
+            var(--nepal-red) 75%, 
+            var(--nepal-blue) 100%
+        );
+    }
+    
+    .container::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 8px;
+        background: linear-gradient(90deg, 
+            var(--nepal-red) 0%, 
+            var(--nepal-blue) 25%, 
+            var(--nepal-red) 50%, 
+            var(--nepal-blue) 75%, 
+            var(--nepal-red) 100%
+        );
+    }
+    
+    .page-title {
+        text-align: center;
+        color: var(--nepal-blue);
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 40px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    
+    .nepal-subtitle {
+        text-align: center;
+        color: var(--nepal-red);
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        font-style: italic;
+    }
+    
+    label {
+        color: var(--nepal-blue) !important;
+        font-weight: bold !important;
+        margin-bottom: 10px;
+        display: block;
+        font-size: 1.1rem;
+    }
+    
+    .form-control {
+        border: 3px solid var(--nepal-blue);
+        border-radius: 12px;
+        padding: 15px 20px;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, var(--nepal-light-blue) 0%, var(--nepal-white) 100%);
+        font-size: 1rem;
+    }
+    
+    .form-control:focus {
+        border-color: var(--nepal-red);
+        box-shadow: 0 0 0 0.3rem rgba(220, 20, 60, 0.25);
+        background: var(--nepal-white);
+        transform: translateY(-2px);
+    }
+    
+    .form-control:hover {
+        border-color: var(--nepal-red);
+        background: var(--nepal-white);
+    }
+    
+    .btn-nepal {
+        background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-red));
+        border: none;
+        color: var(--nepal-white);
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-nepal::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-nepal:hover::before {
+        left: 100%;
+    }
+    
+    .btn-nepal:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        color: var(--nepal-white);
+        background: linear-gradient(45deg, var(--nepal-red), var(--nepal-blue));
+    }
+    
+    .btn-nepal:active {
+        transform: translateY(-1px);
+    }
+    
+    .nepal-icon {
+        color: var(--nepal-red);
+        margin-right: 10px;
+        font-size: 1.2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+    
+    .form-group::before {
+        content: '';
+        position: absolute;
+        left: -10px;
+        top: 50%;
+        width: 4px;
+        height: 60%;
+        background: var(--nepal-red);
+        border-radius: 2px;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .form-group:hover::before {
+        opacity: 1;
+    }
+    
+    .btn-container {
+        text-align: center;
+        margin-top: 40px;
+    }
+    
+    /* Floating elements */
+    .floating-decoration {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: var(--nepal-gold);
+        border-radius: 50%;
+        opacity: 0.2;
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .floating-decoration:nth-child(1) {
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+    }
+    
+    .floating-decoration:nth-child(2) {
+        top: 20%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+    
+    .floating-decoration:nth-child(3) {
+        bottom: 30%;
+        left: 8%;
+        animation-delay: 4s;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    /* Success message styling */
+    .success-message {
+        background: linear-gradient(135deg, var(--nepal-light-blue), var(--nepal-light-red));
+        border: 2px solid var(--nepal-blue);
+        color: var(--nepal-blue);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <!-- Floating decorations -->
+    <div class="floating-decoration"></div>
+    <div class="floating-decoration"></div>
+    <div class="floating-decoration"></div>
+    
+    <h1 class="page-title">🇳🇵 ख्वप पुस्तकालय 🇳🇵 </h1>
+    <p class="nepal-subtitle">Library Management System - Add New Book</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label>
+                    <span class="nepal-icon">📚</span>Book Name
+                </label>
+                <input type="text" class="form-control mt-2" name="name" 
+                       placeholder="Enter name of the Book" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label>
+                    <span class="nepal-icon">✍️</span>Author Name
+                </label>
+                <input type="text" class="form-control mt-2" name="author" 
+                       placeholder="Enter name of the Author" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label>
+                    <span class="nepal-icon">🔢</span>ISBN Number
+                </label>
+                <input type="number" class="form-control mt-2" name="isbn" 
+                       placeholder="Enter ISBN number of the book" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label>
+                    <span class="nepal-icon">📖</span>Category
+                </label>
+                <input type="text" class="form-control mt-2" name="category" 
+                       placeholder="Enter Category of the book" required>
+            </div>
+        </div>
+        
+        <div class="btn-container">
+            <button type="submit" class="btn btn-nepal">
+                📚 Add Book to Library
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<!-- Django template variables for JavaScript -->
+<script id="django-data" type="application/json">
+{
+    "alert": {% if alert %}true{% else %}false{% endif %}
+}
+</script>
+
+<script>
+    // Get Django data from JSON script
+    var djangoData = JSON.parse(document.getElementById('django-data').textContent);
+    
+    // Handle success message
+    document.addEventListener('DOMContentLoaded', function() {
+        if (djangoData.alert) {
+            // Create a beautiful success notification
+            showSuccessMessage("Book is added successfully!");
+            
+            // Redirect after showing the message
+            setTimeout(function() {
+                window.location.href = "/view_books";
+            }, 2000);
+        }
+    });
+    
+    // Beautiful success message function
+    function showSuccessMessage(message) {
+        // Create success notification
+        var successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.innerHTML = '✅ ' + message + ' Redirecting to book list...';
+        
+        // Insert at the top of the container
+        var container = document.querySelector('.container');
+        container.insertBefore(successDiv, container.firstChild);
+        
+        // Add entrance animation
+        successDiv.style.opacity = '0';
+        successDiv.style.transform = 'translateY(-20px)';
+        successDiv.style.transition = 'all 0.5s ease';
+        
+        setTimeout(function() {
+            successDiv.style.opacity = '1';
+            successDiv.style.transform = 'translateY(0)';
+        }, 100);
+    }
+    
+    // Form validation enhancement
+    document.querySelector('form').addEventListener('submit', function(e) {
+        var inputs = this.querySelectorAll('input[required]');
+        var allValid = true;
+        
+        inputs.forEach(function(input) {
+            if (!input.value.trim()) {
+                input.style.borderColor = 'var(--nepal-red)';
+                input.style.background = '#ffe6ea';
+                allValid = false;
+            } else {
+                input.style.borderColor = 'var(--nepal-blue)';
+                input.style.background = 'var(--nepal-light-blue)';
+            }
+        });
+        
+        if (!allValid) {
+            e.preventDefault();
+            alert('Please fill in all required fields.');
+        }
+    });
+    
+    // ISBN validation
+    document.querySelector('input[name="isbn"]').addEventListener('input', function() {
+        var isbn = this.value;
+        if (isbn.length > 0 && (isbn.length < 10 || isbn.length > 13)) {
+            this.style.borderColor = 'var(--nepal-red)';
+            this.title = 'ISBN should be 10 or 13 digits';
+        } else {
+            this.style.borderColor = 'var(--nepal-blue)';
+            this.title = '';
+        }
+    });
+</script>
+{% endblock %}

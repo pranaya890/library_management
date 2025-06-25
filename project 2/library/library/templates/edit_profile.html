@@ -1,0 +1,289 @@
+{% extends 'student_navbar.html' %}
+
+{% block title %} Edit Profile {% endblock %}
+
+{% block css %}
+<style>
+/* Nepal Flag Color Variables */
+:root {
+    --nepal-crimson: #DC143C;
+    --nepal-blue: #000080;
+    --nepal-crimson-light: #E6485B;
+    --nepal-blue-light: #1E3A8A;
+    --nepal-gold: #FFD700;
+}
+
+body {
+    background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+    min-height: 100vh;
+}
+
+.container {
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+    border-radius: 1rem;
+    padding: 3rem;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    box-shadow: 0 15px 35px rgba(220, 20, 60, 0.2), 
+                0 5px 15px rgba(0, 0, 128, 0.1);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue), var(--nepal-crimson));
+    border-radius: 1rem;
+    z-index: -1;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    color: #000000;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: #000000;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-control:focus {
+    border-color: var(--nepal-crimson);
+    box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.1);
+    outline: none;
+    background-color: #ffffff;
+}
+
+.form-control:hover {
+    border-color: var(--nepal-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 128, 0.15);
+}
+
+.row {
+    margin-bottom: 1rem;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--nepal-crimson);
+    color: #000000;
+    background: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 30px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+}
+
+.btn-outline-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.btn-outline-primary:hover {
+    color: #ffffff;
+    border-color: var(--nepal-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.3);
+}
+
+.btn-outline-primary:hover::before {
+    left: 0;
+}
+
+/* Add decorative elements */
+.container::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 40px;
+    background: linear-gradient(45deg, var(--nepal-crimson) 50%, var(--nepal-blue) 50%);
+    border-radius: 5px;
+    opacity: 0.1;
+}
+
+/* Form styling enhancements */
+.form-group {
+    position: relative;
+}
+
+.form-group::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--nepal-crimson), var(--nepal-blue));
+    border-radius: 2px;
+    opacity: 0.3;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .btn-outline-primary {
+        width: 100%;
+        padding: 12px 20px;
+    }
+}
+
+/* Animation for page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Input validation styling */
+.form-control:valid {
+    border-color: #28a745;
+}
+
+.form-control:invalid:not(:placeholder-shown) {
+    border-color: var(--nepal-crimson);
+}
+
+/* Form title styling */
+.form-title {
+    text-align: center;
+    color: #000000;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.form-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
+    border-radius: 2px;
+}
+
+/* Additional styling for better UX */
+.form-control::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.form-group label i {
+    font-style: normal;
+    font-weight: 600;
+}
+
+/* Success message styling */
+.alert-success {
+    background: linear-gradient(45deg, rgba(220, 20, 60, 0.1), rgba(0, 0, 128, 0.1));
+    border: 1px solid var(--nepal-crimson);
+    color: #000000;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="form-title">Edit Profile</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Email</i></label>
+                <input type="email" class="form-control mt-2" name="email" value="{{user.email}}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Mobile Number</i></label>
+                <input type="tel" class="form-control mt-2" name="phone" value="{{user.student.phone}}" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Branch Name</i></label>
+                <input type="text" class="form-control mt-2" name="branch" value="{{user.student.branch}}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Class Name</i></label>
+                <input type="text" class="form-control mt-2" name="classroom" value="{{user.student.classroom}}" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Roll Number</i></label>
+                <input type="text" class="form-control mt-2" name="roll_no" value="{{user.student.roll_no}}" required>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <button type="submit" class="btn btn-outline-primary mt-5">Update Profile</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    // Check if alert variable exists and show success message
+    var alertStatus = "{{ alert|default:'' }}";
+    if (alertStatus) {
+        alert("Profile Updated Successfully.");
+        window.location.href = "/profile";
+    }
+</script>
+{% endblock %}

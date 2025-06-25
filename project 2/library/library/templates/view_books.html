@@ -1,0 +1,272 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+
+{% block title %}
+All Books List
+{% endblock %}
+
+{% block css %}
+<style>
+        :root {
+            --nepal-crimson: #DC143C;
+            --nepal-blue: #003893;
+            --nepal-white: #FFFFFF;
+            --nepal-light-crimson: #E6476F;
+            --nepal-dark-blue: #002570;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: var(--nepal-crimson);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h1::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--nepal-crimson), var(--nepal-blue));
+            border-radius: 2px;
+        }
+
+        .table {
+            background: var(--nepal-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, var(--nepal-crimson), var(--nepal-light-crimson));
+            color: var(--nepal-white);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .table thead th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--nepal-blue);
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .table tbody tr:hover {
+            background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), rgba(0, 56, 147, 0.1));
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: rgba(0, 56, 147, 0.05);
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            text-align: center;
+            vertical-align: middle;
+            border: none;
+            border-bottom: 1px solid rgba(0, 56, 147, 0.1);
+            font-weight: 500;
+            color: var(--nepal-dark-blue);
+        }
+
+        .table tbody td:first-child {
+            font-weight: bold;
+            color: var(--nepal-crimson);
+            font-size: 1.1em;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--nepal-crimson), #B91C3C);
+            border: none;
+            border-radius: 25px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #B91C3C, var(--nepal-crimson));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
+        }
+
+        .btn-danger:active {
+            transform: translateY(0);
+        }
+
+        /* Nepal flag decorative elements */
+        .nepal-decoration {
+            position: fixed;
+            top: 40px;
+            right: 20px;
+            width: 60px;
+            height: 80px;
+            background: var(--nepal-crimson);
+            clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
+            z-index: 1000;
+        }
+
+        .nepal-decoration::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: var(--nepal-white);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .nepal-decoration-left {
+            position: fixed;
+            top: 40px;
+            left: 20px;
+            width: 60px;
+            height: 80px;
+            background: var(--nepal-blue);
+            clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
+            z-index: 1000;
+        }
+
+        .nepal-decoration-left::before {
+            content: '🏔️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .table {
+                font-size: 0.9rem;
+            }
+            
+            .nepal-decoration,
+            .nepal-decoration-left {
+                display: none;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .table tbody tr {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+        .table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+        .table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+        .table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+        .table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+</style>
+{% endblock %}
+
+{% block body %}
+    <!-- Nepal flag decorative elements -->
+    <div class="nepal-decoration"></div>
+    <div class="nepal-decoration-left"></div>
+
+    <div class="container mt-4">
+        <h1 class="text-center">
+            <i class="fas fa-book-open me-3"></i>
+            <u>All Books List</u>
+            <i class="fas fa-book-open ms-3"></i>
+        </h1>
+        
+        <div class="table-responsive">
+            <table class="table table-hover" id="example">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-hashtag me-2"></i>Sr.No</th>
+                        <th><i class="fas fa-book me-2"></i>Book Name</th>
+                        <th><i class="fas fa-user-edit me-2"></i>Author</th>
+                        <th><i class="fas fa-barcode me-2"></i>ISBN Number</th>
+                        <th><i class="fas fa-tags me-2"></i>Category</th>
+                        <th><i class="fas fa-trash me-2"></i>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{forloop.counter}}.</td>
+                        <td>{{book.name}}</td>
+                        <td>{{book.author}}</td>
+                        <td>{{book.isbn}}</td>
+                        <td>{{book.category}}</td>
+                        <td>
+                            <a href="/delete_book/{{book.id}}/" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">
+                                <i class="fas fa-trash me-1"></i>Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

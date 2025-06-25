@@ -1,0 +1,308 @@
+{% extends 'admin_navbar.html' %}
+{% load static %}
+
+{% block title %}
+All Students List
+{% endblock %}
+
+{% block css %}
+<style>
+        :root {
+            --nepal-crimson: #DC143C;
+            --nepal-blue: #003893;
+            --nepal-light-crimson: #FF6B8A;
+            --nepal-light-blue: #4A90E2;
+            --nepal-gold: #FFD700;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .nepal-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin: 2rem auto;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--nepal-gold);
+        }
+
+        .nepal-header {
+            background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nepal-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
+        }
+
+        .nepal-header h1 {
+            position: relative;
+            z-index: 2;
+            margin: 0;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .nepal-flag-icon {
+            font-size: 2rem;
+            color: var(--nepal-gold);
+        }
+
+        .nepal-table {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nepal-table thead {
+            background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-crimson));
+            color: white;
+        }
+
+        .nepal-table thead th {
+            padding: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            position: relative;
+        }
+
+        .nepal-table thead th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--nepal-gold);
+        }
+
+        .nepal-table tbody tr {
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .nepal-table tbody tr:nth-child(even) {
+            background: rgba(220, 20, 60, 0.05);
+        }
+
+        .nepal-table tbody tr:hover {
+            background: linear-gradient(45deg, rgba(220, 20, 60, 0.1), rgba(0, 56, 147, 0.1));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nepal-table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-color: rgba(220, 20, 60, 0.1);
+            position: relative;
+        }
+
+        .nepal-table tbody tr:hover td {
+            color: var(--nepal-blue);
+            font-weight: 500;
+        }
+
+        .nepal-btn-delete {
+            background: linear-gradient(45deg, var(--nepal-crimson), #FF1744);
+            border: 2px solid var(--nepal-gold);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nepal-btn-delete:hover {
+            background: linear-gradient(45deg, #FF1744, var(--nepal-crimson));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+            color: white;
+            border-color: white;
+        }
+
+        .serial-number {
+            background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-crimson));
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: var(--nepal-blue);
+        }
+
+        .student-id {
+            font-family: monospace;
+            background: rgba(0, 56, 147, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+            color: var(--nepal-blue);
+            font-weight: bold;
+        }
+
+        .student-email {
+            color: var(--nepal-crimson);
+            font-style: italic;
+        }
+
+        .nepal-decoration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            color: var(--nepal-gold);
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .branch-badge {
+            background: linear-gradient(45deg, var(--nepal-light-blue), var(--nepal-blue));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .class-badge {
+            background: linear-gradient(45deg, var(--nepal-light-crimson), var(--nepal-crimson));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .roll-number {
+            background: var(--nepal-gold);
+            color: var(--nepal-blue);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: bold;
+            border: 2px solid var(--nepal-blue);
+        }
+
+        @media (max-width: 768px) {
+            .nepal-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .nepal-table {
+                font-size: 0.85rem;
+            }
+            
+            .nepal-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="nepal-decoration">
+        <i class="fas fa-mountain"></i>
+    </div>
+    
+    <div class="container nepal-container">
+        <div class="nepal-header">
+            <h1>
+                <i class="fas fa-flag nepal-flag-icon"></i>
+                Students List
+                <i class="fas fa-users nepal-flag-icon"></i>
+            </h1>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table nepal-table" id="example">
+                <thead>
+                    <tr class="text-center">
+                        <th><i class="fas fa-hashtag me-2"></i>Sr.No</th>
+                        <th><i class="fas fa-user me-2"></i>Name</th>
+                        <th><i class="fas fa-id-card me-2"></i>ID</th>
+                        <th><i class="fas fa-envelope me-2"></i>Email</th>
+                        <th><i class="fas fa-phone me-2"></i>Mobile Number</th>
+                        <th><i class="fas fa-code-branch me-2"></i>Branch</th>
+                        <th><i class="fas fa-graduation-cap me-2"></i>Class</th>
+                        <th><i class="fas fa-list-ol me-2"></i>Roll Number</th>
+                        <th><i class="fas fa-trash me-2"></i>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr class="text-center">
+                        <td><span class="serial-number">{{forloop.counter}}</span></td>
+                        <td class="student-name">{{student.user.get_full_name}}</td>
+                        <td><span class="student-id">{{student.user.id}}</span></td>
+                        <td class="student-email">{{student.user.email}}</td>
+                        <td>{{student.phone}}</td>
+                        <td><span class="branch-badge">{{student.branch}}</span></td>
+                        <td><span class="class-badge">{{student.classroom}}</span></td>
+                        <td><span class="roll-number">{{student.roll_no}}</span></td>
+                        <td>
+                            <a href="/delete_student/{{student.id}}/" class="nepal-btn-delete" onclick="return confirm('Are you sure you want to delete this student?')">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

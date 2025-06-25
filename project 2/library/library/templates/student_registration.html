@@ -1,0 +1,449 @@
+{% extends 'basic.html' %}
+{% load static %}
+
+{% block title %}
+Library Management System
+{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<style>
+    body {
+        background: linear-gradient(135deg, #1a237e 0%, #3949ab 50%, #dc143c 100%);
+        min-height: 100vh;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .registration-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 3rem;
+        margin: 2rem auto;
+        max-width: 900px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        border: 2px solid rgba(220, 20, 60, 0.2);
+    }
+
+    .registration-title {
+        background: linear-gradient(135deg, #1a237e, #dc143c);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        position: relative;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .registration-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 4px;
+        background: linear-gradient(90deg, #1a237e, #dc143c, #1a237e);
+        border-radius: 2px;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        color: #1a237e;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 1rem;
+    }
+
+    .form-control {
+        border: 2px solid #1a237e;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 10px rgba(26, 35, 126, 0.1);
+    }
+
+    .form-control:focus {
+        border-color: #dc143c;
+        box-shadow: 0 0 0 0.2rem rgba(220, 20, 60, 0.25);
+        background: white;
+        outline: none;
+    }
+
+    .form-control:hover {
+        border-color: #3949ab;
+        box-shadow: 0 4px 15px rgba(26, 35, 126, 0.15);
+    }
+
+    .form-control::placeholder {
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .register-btn {
+        background: linear-gradient(45deg, #1a237e, #3949ab);
+        border: none;
+        color: white;
+        padding: 1rem 3rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(26, 35, 126, 0.3);
+        display: block;
+        margin: 2rem auto 0;
+        min-width: 250px;
+    }
+
+    .register-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(220, 20, 60, 0.4);
+        background: linear-gradient(45deg, #dc143c, #e91e63);
+    }
+
+    .register-btn:active {
+        transform: translateY(-1px);
+    }
+
+    .form-section {
+        background: rgba(248, 250, 252, 0.7);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 2px solid rgba(26, 35, 126, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-section:hover {
+        border-color: rgba(220, 20, 60, 0.2);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-icon {
+        position: relative;
+    }
+
+    .input-icon::before {
+        content: attr(data-icon);
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #dc143c;
+        font-size: 1.1rem;
+        z-index: 1;
+    }
+
+    .input-icon .form-control {
+        padding-left: 3rem;
+    }
+
+    /* Icon styles for form labels */
+    .form-group label i {
+        color: #dc143c;
+        margin-right: 8px;
+    }
+
+    /* File input special styling */
+    input[type="file"].form-control {
+        padding: 0.5rem 1rem;
+        background: rgba(248, 250, 252, 0.9);
+    }
+
+    input[type="file"].form-control:focus {
+        background: white;
+    }
+
+    /* Floating animation for the container */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+    }
+    
+    .registration-container {
+        animation: float 8s ease-in-out infinite;
+    }
+
+    /* Section titles */
+    .section-divider {
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #1a237e, #dc143c, #1a237e, transparent);
+        border-radius: 2px;
+        margin: 2rem 0 1rem 0;
+    }
+
+    @media (max-width: 768px) {
+        .registration-container {
+            margin: 1rem;
+            padding: 2rem 1.5rem;
+        }
+        
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .form-row .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .registration-title {
+            font-size: 2rem;
+        }
+        
+        .register-btn {
+            min-width: 200px;
+            font-size: 1rem;
+        }
+    }
+
+    .floating-label {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .floating-label .form-control {
+        padding-top: 1.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .floating-label label {
+        position: absolute;
+        top: 0.75rem;
+        left: 1rem;
+        color: #6c757d;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        background: transparent;
+    }
+
+    .floating-label .form-control:focus + label,
+    .floating-label .form-control:not(:placeholder-shown) + label {
+        top: 0.25rem;
+        font-size: 0.75rem;
+        color: #dc143c;
+        font-weight: 600;
+    }
+
+    /* Add subtle glow effect to focused sections */
+    .form-section:has(.form-control:focus) {
+        border-color: rgba(220, 20, 60, 0.3);
+        box-shadow: 0 0 20px rgba(220, 20, 60, 0.1);
+    }
+
+    /* Enhanced placeholder animations */
+    .form-control:focus::placeholder {
+        color: transparent;
+        transform: translateX(10px);
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="registration-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 class="text-center registration-title">Student Registration</h1>
+            
+            <div class="form-section">
+                <div class="form-group">
+                    <label><i class="fas fa-user" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Username</span></label>
+                    <input type="text" class="form-control" name="username" placeholder="Enter your unique username" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-id-badge" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">First Name</span></label>
+                        <input type="text" class="form-control" name="first_name" placeholder="Enter your first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Last Name</span></label>
+                        <input type="text" class="form-control" name="last_name" placeholder="Enter your last name" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Email</span></label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-phone" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Mobile Number</span></label>
+                        <input type="number" class="form-control" name="phone" placeholder="Enter your mobile number" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-code-branch" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Branch Name</span></label>
+                        <input type="text" class="form-control" name="branch" placeholder="Enter your branch/department" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-chalkboard-teacher" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Class Name</span></label>
+                        <input type="text" class="form-control" name="classroom" placeholder="Enter your class name" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-hashtag" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Roll Number</span></label>
+                        <input type="text" class="form-control" name="roll_no" placeholder="Enter your roll number" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-camera" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Student Image</span></label>
+                        <input type="file" class="form-control" name="image" accept="image/*" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-lock" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Password</span></label>
+                        <input type="password" class="form-control" name="password" placeholder="Create a strong password" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock-open" style="color: #dc143c; margin-right: 8px;"></i><span style="font-weight: bold;">Confirm Password</span></label>
+                        <input type="password" class="form-control" name="confirm_password" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="register-btn">
+                <i class="fas fa-user-plus" style="margin-right: 10px;"></i>
+                Register As Student
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Pass Django context to JavaScript safely -->
+{{ alert|json_script:"alert-data" }}
+{% endblock %}
+
+{% block js %}
+{{ block.super }}
+<script>
+    // Get the alert data from Django context
+    const alertData = JSON.parse(document.getElementById('alert-data').textContent);
+    
+    if (alertData) {
+        alert("Registration Successful.");
+        document.location = "/student_login";
+    }
+    
+    // Enhanced form interactions
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add smooth focus transitions for inputs
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+                this.parentElement.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+                this.parentElement.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Add button click animation with ripple effect
+        const registerBtn = document.querySelector('.register-btn');
+        if (registerBtn) {
+            registerBtn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = 
+                    'position: absolute;' +
+                    'width: ' + size + 'px;' +
+                    'height: ' + size + 'px;' +
+                    'left: ' + x + 'px;' +
+                    'top: ' + y + 'px;' +
+                    'background: rgba(255, 255, 255, 0.3);' +
+                    'border-radius: 50%;' +
+                    'transform: scale(0);' +
+                    'animation: ripple 0.6s linear;' +
+                    'pointer-events: none;';
+                
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(function() {
+                    ripple.remove();
+                }, 600);
+            });
+        }
+        
+        // Password confirmation validation
+        const password = document.querySelector('input[name="password"]');
+        const confirmPassword = document.querySelector('input[name="confirm_password"]');
+        
+        if (password && confirmPassword) {
+            confirmPassword.addEventListener('input', function() {
+                if (this.value !== password.value) {
+                    this.style.borderColor = '#dc143c';
+                    this.style.boxShadow = '0 0 0 0.2rem rgba(220, 20, 60, 0.25)';
+                } else {
+                    this.style.borderColor = '#28a745';
+                    this.style.boxShadow = '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    .form-control {
+        transition: all 0.3s ease, transform 0.2s ease;
+    }
+    
+    .form-section {
+        transition: all 0.3s ease, transform 0.2s ease;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,339 @@
+{% extends 'student_navbar.html' %}
+
+{% block title %} Profile {% endblock %}
+
+{% block css %}
+<style>
+/* Nepal Flag Color Variables */
+:root {
+    --nepal-crimson: #DC143C;
+    --nepal-blue: #000080;
+    --nepal-crimson-light: #E6485B;
+    --nepal-blue-light: #1E3A8A;
+    --nepal-gold: #FFD700;
+}
+
+body {
+    background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+    min-height: 100vh;
+}
+
+.profile {
+    padding: 3%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border-radius: 1rem;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+    box-shadow: 0 15px 35px rgba(220, 20, 60, 0.2), 
+                0 5px 15px rgba(0, 56, 147, 0.1);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+}
+
+.profile::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue), var(--nepal-crimson));
+    border-radius: 1rem;
+    z-index: -1;
+}
+
+.profile-img {
+    text-align: center;
+    position: relative;
+}
+
+.profile-img img {
+    border-radius: 15px;
+    border: 4px solid var(--nepal-crimson);
+    box-shadow: 0 8px 25px rgba(220, 20, 60, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-img img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 35px rgba(220, 20, 60, 0.4);
+}
+
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
+    color: white;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.profile-img .file:hover {
+    background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-crimson));
+    transform: translateY(-2px);
+}
+
+.profile-tab {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    border-left: 5px solid var(--nepal-crimson);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-tab .row {
+    margin-bottom: 1.5rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.profile-tab .row:hover {
+    background: linear-gradient(90deg, rgba(220, 20, 60, 0.05) 0%, rgba(0, 56, 147, 0.05) 100%);
+    border-left: 3px solid var(--nepal-blue);
+    transform: translateX(5px);
+}
+
+.profile-tab label {
+    font-weight: 600;
+    color: #000000;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.profile-tab p {
+    color: #000000;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    padding: 0.75rem 1rem;
+    background: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    margin-left: -15px;
+    width: calc(100% + 30px);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--nepal-crimson);
+    color: var(--nepal-crimson);
+    background: transparent;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 24px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-outline-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.btn-outline-primary:hover {
+    color: white;
+    border-color: var(--nepal-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.3);
+}
+
+.btn-outline-primary:hover::before {
+    left: 0;
+}
+
+/* Nepal flag pattern decoration */
+.profile::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 40px;
+    background: linear-gradient(45deg, var(--nepal-crimson) 50%, var(--nepal-blue) 50%);
+    border-radius: 5px;
+    opacity: 0.1;
+}
+
+/* Add some traditional Nepali design elements */
+.tab-pane {
+    position: relative;
+}
+
+.tab-pane::before {
+    content: '☀️';
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+    color: var(--nepal-gold);
+}
+
+.tab-pane::after {
+    content: '🌙';
+    position: absolute;
+    bottom: -10px;
+    right: 50px;
+    font-size: 1.5rem;
+    opacity: 0.3;
+    color: var(--nepal-gold);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile {
+        margin-top: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .profile-tab {
+        margin-top: 2rem;
+        padding: 1rem;
+    }
+    
+    .profile-img img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+    }
+}
+
+/* Animation for page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Traditional pattern overlay */
+.profile-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(220, 20, 60, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 56, 147, 0.03) 0%, transparent 50%);
+    border-radius: 15px;
+    pointer-events: none;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container profile">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="{{user.student.image.url}}" alt="Student Profile" width="310px" height="270px">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="profile-tab">
+                <div class="tab-pane">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>ID:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user.id}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Username:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Full Name:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user.get_full_name}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user.email}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Phone Number:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user.student.phone}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Branch:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user.student.branch}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Class:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user.student.classroom}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Roll Number:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{user.student.roll_no}}</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="/edit_profile/" style="width: 9rem;" class="btn btn-outline-primary mt-3">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
