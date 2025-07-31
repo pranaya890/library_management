@@ -5,45 +5,33 @@
 
 {% block css %}
 <style>
-    /* Nepal Flag Theme */
+    /* Steel Blue Theme */
     :root {
-        --nepal-blue: #003893;
-        --nepal-red: #DC143C;
-        --nepal-white: #FFFFFF;
-        --nepal-light-blue: #E6F3FF;
-        --nepal-light-red: #FFE6EA;
-        --nepal-gold: #FFD700;
+        --primary-blue: #4682B4;
+        --dark-blue: #2F4F4F;
+        --light-blue: #E6F0FA;
+        --white: #FFFFFF;
+        --black: #000000;
+        --gray: #666666;
+        --light-gray: #F8F9FA;
+        --shadow-color: rgba(70, 130, 180, 0.3);
     }
     
     body {
-        background: linear-gradient(135deg, var(--nepal-blue) 0%, var(--nepal-red) 100%);
+        background: var(--white);
         min-height: 100vh;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        position: relative;
-    }
-    
-    /* Decorative elements inspired by Nepal flag */
-    body::before {
-        content: '';
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 60px;
-        height: 80px;
-        background: linear-gradient(45deg, var(--nepal-blue) 50%, var(--nepal-red) 50%);
-        clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
-        z-index: 1;
-        opacity: 0.3;
+        color: var(--black);
     }
     
     .container {
-        background: var(--nepal-white);
+        background: var(--white);
         border-radius: 20px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 15px 35px var(--shadow-color);
         padding: 50px;
         margin-top: 30px;
         margin-bottom: 30px;
-        border: 4px solid var(--nepal-blue);
+        border: 2px solid var(--primary-blue);
         position: relative;
         overflow: hidden;
     }
@@ -54,14 +42,8 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 8px;
-        background: linear-gradient(90deg, 
-            var(--nepal-blue) 0%, 
-            var(--nepal-red) 25%, 
-            var(--nepal-blue) 50%, 
-            var(--nepal-red) 75%, 
-            var(--nepal-blue) 100%
-        );
+        height: 6px;
+        background: var(--primary-blue);
     }
     
     .container::after {
@@ -70,19 +52,13 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 8px;
-        background: linear-gradient(90deg, 
-            var(--nepal-red) 0%, 
-            var(--nepal-blue) 25%, 
-            var(--nepal-red) 50%, 
-            var(--nepal-blue) 75%, 
-            var(--nepal-red) 100%
-        );
+        height: 6px;
+        background: var(--primary-blue);
     }
     
     .page-title {
         text-align: center;
-        color: var(--nepal-blue);
+        color: var(--primary-blue);
         font-size: 2.5rem;
         font-weight: bold;
         margin-bottom: 40px;
@@ -90,16 +66,16 @@
         position: relative;
     }
     
-    .nepal-subtitle {
+    .subtitle {
         text-align: center;
-        color: var(--nepal-red);
+        color: var(--gray);
         font-size: 1.2rem;
         margin-bottom: 30px;
         font-style: italic;
     }
     
     label {
-        color: var(--nepal-blue) !important;
+        color: var(--black) !important;
         font-weight: bold !important;
         margin-bottom: 10px;
         display: block;
@@ -107,30 +83,36 @@
     }
     
     .form-control {
-        border: 3px solid var(--nepal-blue);
+        border: 2px solid var(--primary-blue);
         border-radius: 12px;
         padding: 15px 20px;
         transition: all 0.3s ease;
-        background: linear-gradient(135deg, var(--nepal-light-blue) 0%, var(--nepal-white) 100%);
+        background: var(--white);
         font-size: 1rem;
+        color: var(--black);
     }
     
     .form-control:focus {
-        border-color: var(--nepal-red);
-        box-shadow: 0 0 0 0.3rem rgba(220, 20, 60, 0.25);
-        background: var(--nepal-white);
+        border-color: var(--dark-blue);
+        box-shadow: 0 0 0 0.3rem var(--shadow-color);
+        background: var(--white);
         transform: translateY(-2px);
+        outline: none;
     }
     
     .form-control:hover {
-        border-color: var(--nepal-red);
-        background: var(--nepal-white);
+        border-color: var(--dark-blue);
+        background: var(--light-gray);
     }
     
-    .btn-nepal {
-        background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-red));
-        border: none;
-        color: var(--nepal-white);
+    .form-control::placeholder {
+        color: var(--gray);
+    }
+    
+    .btn-primary {
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--white);
         padding: 15px 40px;
         border-radius: 30px;
         font-weight: bold;
@@ -138,12 +120,12 @@
         transition: all 0.3s ease;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 15px var(--shadow-color);
         position: relative;
         overflow: hidden;
     }
     
-    .btn-nepal::before {
+    .btn-primary::before {
         content: '';
         position: absolute;
         top: 0;
@@ -154,23 +136,24 @@
         transition: left 0.5s;
     }
     
-    .btn-nepal:hover::before {
+    .btn-primary:hover::before {
         left: 100%;
     }
     
-    .btn-nepal:hover {
+    .btn-primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        color: var(--nepal-white);
-        background: linear-gradient(45deg, var(--nepal-red), var(--nepal-blue));
+        box-shadow: 0 8px 25px var(--shadow-color);
+        color: var(--white);
+        background: var(--dark-blue);
+        border-color: var(--dark-blue);
     }
     
-    .btn-nepal:active {
+    .btn-primary:active {
         transform: translateY(-1px);
     }
     
-    .nepal-icon {
-        color: var(--nepal-red);
+    .icon {
+        color: var(--primary-blue);
         margin-right: 10px;
         font-size: 1.2rem;
     }
@@ -187,7 +170,7 @@
         top: 50%;
         width: 4px;
         height: 60%;
-        background: var(--nepal-red);
+        background: var(--primary-blue);
         border-radius: 2px;
         transform: translateY(-50%);
         opacity: 0;
@@ -206,11 +189,11 @@
     /* Floating elements */
     .floating-decoration {
         position: absolute;
-        width: 20px;
-        height: 20px;
-        background: var(--nepal-gold);
+        width: 15px;
+        height: 15px;
+        background: var(--primary-blue);
         border-radius: 50%;
-        opacity: 0.2;
+        opacity: 0.15;
         animation: float 6s ease-in-out infinite;
     }
     
@@ -239,14 +222,30 @@
     
     /* Success message styling */
     .success-message {
-        background: linear-gradient(135deg, var(--nepal-light-blue), var(--nepal-light-red));
-        border: 2px solid var(--nepal-blue);
-        color: var(--nepal-blue);
+        background: var(--light-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--black);
         padding: 15px;
         border-radius: 10px;
         margin-bottom: 20px;
         text-align: center;
         font-weight: bold;
+    }
+    
+    /* Additional styling for better contrast */
+    .row {
+        margin: 0;
+    }
+    
+    .col-md-12 {
+        padding: 0 15px;
+    }
+    
+    /* Focus states for accessibility */
+    .form-control:focus,
+    .btn-primary:focus {
+        outline: 2px solid var(--primary-blue);
+        outline-offset: 2px;
     }
 </style>
 {% endblock %}
@@ -258,8 +257,8 @@
     <div class="floating-decoration"></div>
     <div class="floating-decoration"></div>
     
-    <h1 class="page-title">🇳🇵 ख्वप पुस्तकालय 🇳🇵 </h1>
-    <p class="nepal-subtitle">Library Management System - Add New Book</p>
+    <h1 class="page-title">📚 Library Management System 📚</h1>
+    <p class="subtitle">Add New Book to Collection</p>
     
     <form method="POST">
         {% csrf_token %}
@@ -267,7 +266,7 @@
         <div class="row mt-4">
             <div class="form-group col-md-12">
                 <label>
-                    <span class="nepal-icon">📚</span>Book Name
+                    <span class="icon">📚</span>Book Name
                 </label>
                 <input type="text" class="form-control mt-2" name="name" 
                        placeholder="Enter name of the Book" required>
@@ -277,7 +276,7 @@
         <div class="row mt-4">
             <div class="form-group col-md-12">
                 <label>
-                    <span class="nepal-icon">✍️</span>Author Name
+                    <span class="icon">✍️</span>Author Name
                 </label>
                 <input type="text" class="form-control mt-2" name="author" 
                        placeholder="Enter name of the Author" required>
@@ -287,7 +286,7 @@
         <div class="row mt-4">
             <div class="form-group col-md-12">
                 <label>
-                    <span class="nepal-icon">🔢</span>ISBN Number
+                    <span class="icon">🔢</span>ISBN Number
                 </label>
                 <input type="number" class="form-control mt-2" name="isbn" 
                        placeholder="Enter ISBN number of the book" required>
@@ -297,7 +296,7 @@
         <div class="row mt-4">
             <div class="form-group col-md-12">
                 <label>
-                    <span class="nepal-icon">📖</span>Category
+                    <span class="icon">📖</span>Category
                 </label>
                 <input type="text" class="form-control mt-2" name="category" 
                        placeholder="Enter Category of the book" required>
@@ -305,7 +304,7 @@
         </div>
         
         <div class="btn-container">
-            <button type="submit" class="btn btn-nepal">
+            <button type="submit" class="btn btn-primary">
                 📚 Add Book to Library
             </button>
         </div>
@@ -367,12 +366,12 @@
         
         inputs.forEach(function(input) {
             if (!input.value.trim()) {
-                input.style.borderColor = 'var(--nepal-red)';
-                input.style.background = '#ffe6ea';
+                input.style.borderColor = '#dc3545';
+                input.style.background = '#fff5f5';
                 allValid = false;
             } else {
-                input.style.borderColor = 'var(--nepal-blue)';
-                input.style.background = 'var(--nepal-light-blue)';
+                input.style.borderColor = 'var(--primary-blue)';
+                input.style.background = 'var(--white)';
             }
         });
         
@@ -386,10 +385,10 @@
     document.querySelector('input[name="isbn"]').addEventListener('input', function() {
         var isbn = this.value;
         if (isbn.length > 0 && (isbn.length < 10 || isbn.length > 13)) {
-            this.style.borderColor = 'var(--nepal-red)';
+            this.style.borderColor = '#dc3545';
             this.title = 'ISBN should be 10 or 13 digits';
         } else {
-            this.style.borderColor = 'var(--nepal-blue)';
+            this.style.borderColor = 'var(--primary-blue)';
             this.title = '';
         }
     });

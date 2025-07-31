@@ -7,53 +7,57 @@ All Students List
 
 {% block css %}
 <style>
-    /* Nepal Flag Theme Colors */
+    /* Steel Blue Theme Colors */
     :root {
-        --nepal-crimson: #DC143C;
-        --nepal-blue: #003893;
-        --nepal-light-crimson: #E6395A;
-        --nepal-dark-blue: #002A6B;
-        --nepal-white: #FFFFFF;
-        --nepal-light-gray: #F8F9FA;
+        --primary-blue: #4682B4;
+        --dark-blue: #2F4F4F;
+        --light-blue: #E6F0FA;
+        --white: #FFFFFF;
+        --black: #000000;
+        --gray: #666666;
+        --light-gray: #F8F9FA;
+        --shadow-color: rgba(70, 130, 180, 0.3);
     }
 
     body {
-        background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+        background: var(--white);
         min-height: 100vh;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--black);
     }
 
     .container {
-        background: var(--nepal-white);
+        background: var(--white);
         border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 30px var(--shadow-color);
         margin-top: 20px;
         margin-bottom: 20px;
         padding: 30px;
-        border: 3px solid var(--nepal-blue);
+        border: 3px solid var(--primary-blue);
+        position: relative;
     }
 
     h2 {
-        color: var(--nepal-crimson);
+        color: var(--primary-blue);
         text-align: center;
         margin-bottom: 30px;
         font-weight: bold;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         font-size: 2.2rem;
-        border-bottom: 3px solid var(--nepal-blue);
+        border-bottom: 3px solid var(--primary-blue);
         padding-bottom: 15px;
     }
 
     .table {
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        border: 2px solid var(--nepal-blue);
+        box-shadow: 0 5px 15px var(--shadow-color);
+        border: 2px solid var(--primary-blue);
     }
 
     .table thead th {
-        background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-light-crimson));
-        color: var(--nepal-white);
+        background: var(--primary-blue);
+        color: var(--white);
         font-weight: bold;
         text-align: center;
         border: none;
@@ -62,58 +66,61 @@ All Students List
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
     }
 
-    .table tbody tr {
-        transition: all 0.3s ease;
-    }
-
     .table tbody tr:nth-child(odd) {
-        background-color: var(--nepal-light-gray);
+        background-color: var(--light-gray);
     }
 
     .table tbody tr:nth-child(even) {
-        background-color: var(--nepal-white);
-    }
-
-    .table tbody tr:hover {
-        background: linear-gradient(90deg, rgba(220, 20, 60, 0.1), rgba(0, 56, 147, 0.1));
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: var(--white);
     }
 
     .table tbody td {
         padding: 12px 10px;
         vertical-align: middle;
-        border-bottom: 1px solid rgba(0, 56, 147, 0.2);
+        border-bottom: 1px solid rgba(70, 130, 180, 0.2);
         font-size: 0.9rem;
+        color: var(--black);
     }
 
     .table tbody td:first-child {
         font-weight: bold;
-        color: var(--nepal-blue);
+        color: var(--primary-blue);
     }
 
     .btn-danger {
-        background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-light-crimson));
-        border: 2px solid var(--nepal-blue);
-        color: var(--nepal-white);
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--white);
         font-weight: bold;
         padding: 6px 12px;
         border-radius: 20px;
-        transition: all 0.3s ease;
         text-decoration: none;
         display: inline-block;
     }
 
     .btn-danger:hover {
-        background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-dark-blue));
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        color: var(--nepal-white);
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--white);
         text-decoration: none;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .btn-danger:active {
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--white);
+        transform: none;
+    }
+
+    .btn-danger:focus {
+        outline: 2px solid var(--primary-blue);
+        outline-offset: 2px;
     }
 
     .text-center {
-        color: var(--nepal-blue);
+        color: var(--primary-blue);
         font-style: italic;
         font-size: 1.1rem;
         padding: 30px;
@@ -121,7 +128,7 @@ All Students List
 
     /* Currency symbol styling */
     td:nth-child(8) {
-        color: var(--nepal-crimson);
+        color: var(--primary-blue);
         font-weight: bold;
     }
 
@@ -146,7 +153,7 @@ All Students List
         }
     }
 
-    /* Add Nepal flag inspired decorative elements */
+    /* Add decorative elements */
     .container::before {
         content: '';
         position: absolute;
@@ -154,7 +161,7 @@ All Students List
         left: -5px;
         right: -5px;
         height: 5px;
-        background: linear-gradient(90deg, var(--nepal-crimson) 50%, var(--nepal-blue) 50%);
+        background: var(--primary-blue);
         border-radius: 15px 15px 0 0;
     }
 
@@ -165,12 +172,28 @@ All Students List
         left: -5px;
         right: -5px;
         height: 5px;
-        background: linear-gradient(90deg, var(--nepal-blue) 50%, var(--nepal-crimson) 50%);
+        background: var(--primary-blue);
         border-radius: 0 0 15px 15px;
     }
 
-    .container {
-        position: relative;
+    /* Remove all transitions and hover effects */
+    * {
+        transition: none !important;
+    }
+
+    .table tbody tr:hover {
+        background: inherit;
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* Ensure table striping is maintained */
+    .table tbody tr:nth-child(odd):hover {
+        background-color: var(--light-gray);
+    }
+
+    .table tbody tr:nth-child(even):hover {
+        background-color: var(--white);
     }
 </style>
 {% endblock %}

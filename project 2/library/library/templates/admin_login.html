@@ -8,26 +8,26 @@ Library Management System
 {% block css %}
 <style>
     body {
-        background: linear-gradient(135deg, #1a237e 0%, #3949ab 50%, #dc143c 100%);
+        background: white;
+        color: black;
         min-height: 100vh;
         font-family: 'Arial', sans-serif;
     }
     
     .login-container {
-        background: rgba(255, 255, 255, 0.95);
+        background: white;
         border-radius: 15px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         padding: 40px;
         margin-top: 50px;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(220, 20, 60, 0.2);
+        border: 2px solid #4682B4;
         max-width: 500px;
         margin-left: auto;
         margin-right: auto;
     }
     
     .login-title {
-        color: #1a237e;
+        color: #4682B4;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         margin-bottom: 30px;
@@ -35,46 +35,48 @@ Library Management System
     }
     
     .admin-notice {
-        background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), rgba(26, 35, 126, 0.1));
-        border: 2px solid rgba(220, 20, 60, 0.3);
+        background: rgba(70, 130, 180, 0.1);
+        border: 2px solid rgba(70, 130, 180, 0.3);
         border-radius: 10px;
         padding: 15px;
         margin-bottom: 25px;
-        color: #1a237e;
+        color: black;
         font-weight: 600;
         text-align: center;
     }
     
     .admin-notice b {
-        color: #dc143c;
+        color: #4682B4;
         font-size: 1.1rem;
     }
     
     .form-label {
-        color: #1a237e;
+        color: black;
         font-weight: bold;
         font-size: 1.1rem;
         margin-bottom: 8px;
     }
     
     .form-control {
-        border: 2px solid #1a237e;
+        border: 2px solid #4682B4;
         border-radius: 8px;
         padding: 12px 15px;
         font-size: 1rem;
         transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.9);
+        background: white;
+        color: black;
     }
     
     .form-control:focus {
-        border-color: #dc143c;
-        box-shadow: 0 0 0 0.2rem rgba(220, 20, 60, 0.25);
+        border-color: #5a9bd4;
+        box-shadow: 0 0 0 0.2rem rgba(70, 130, 180, 0.25);
         background: white;
         outline: none;
+        color: black;
     }
     
     .login-btn {
-        background: linear-gradient(45deg, #1a237e, #3949ab);
+        background: #4682B4;
         border: none;
         color: white;
         padding: 12px 30px;
@@ -84,14 +86,14 @@ Library Management System
         transition: all 0.3s ease;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+        box-shadow: 0 4px 15px rgba(70, 130, 180, 0.3);
         width: 100%;
     }
     
     .login-btn:hover {
-        background: linear-gradient(45deg, #dc143c, #e91e63);
+        background: #5a9bd4;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
+        box-shadow: 0 6px 20px rgba(70, 130, 180, 0.4);
         color: white;
     }
     
@@ -105,19 +107,19 @@ Library Management System
     
     .decoration-line {
         height: 4px;
-        background: linear-gradient(90deg, #1a237e, #dc143c, #1a237e);
+        background: #4682B4;
         border-radius: 2px;
         margin: 20px 0;
     }
     
     .login-icon {
         font-size: 3rem;
-        color: #dc143c;
+        color: #4682B4;
         margin-bottom: 20px;
     }
     
     .admin-badge {
-        background: linear-gradient(45deg, #dc143c, #e91e63);
+        background: #4682B4;
         color: white;
         padding: 5px 15px;
         border-radius: 20px;
@@ -127,7 +129,7 @@ Library Management System
         letter-spacing: 1px;
         display: inline-block;
         margin-bottom: 15px;
-        box-shadow: 0 2px 10px rgba(220, 20, 60, 0.3);
+        box-shadow: 0 2px 10px rgba(70, 130, 180, 0.3);
     }
     
     /* Floating animation for the container */
@@ -160,6 +162,11 @@ Library Management System
         animation: pulse 2s ease-in-out infinite;
     }
     
+    /* Icon colors */
+    .icon-blue {
+        color: #4682B4;
+    }
+    
     /* Responsive design */
     @media (max-width: 768px) {
         .login-container {
@@ -187,7 +194,7 @@ Library Management System
                 </div>
                 
                 <div class="admin-notice">
-                    <i class="fas fa-exclamation-triangle" style="color: #dc143c; margin-right: 8px;"></i>
+                    <i class="fas fa-exclamation-triangle icon-blue" style="margin-right: 8px;"></i>
                     <b>Note:</b> Only the admin can login from here. No student will be allowed to login.
                 </div>
                 
@@ -196,7 +203,7 @@ Library Management System
                     
                     <div class="form-group">
                         <label class="form-label">
-                            <i class="fas fa-user-tie" style="color: #dc143c; margin-right: 8px;"></i>
+                            <i class="fas fa-user-tie icon-blue" style="margin-right: 8px;"></i>
                             Admin Username
                         </label>
                         <input type="text" class="form-control" name="username" placeholder="Enter admin username" required>
@@ -204,7 +211,7 @@ Library Management System
                     
                     <div class="form-group">
                         <label class="form-label">
-                            <i class="fas fa-key" style="color: #dc143c; margin-right: 8px;"></i>
+                            <i class="fas fa-key icon-blue" style="margin-right: 8px;"></i>
                             Admin Password
                         </label>
                         <input type="password" class="form-control" name="password" placeholder="Enter admin password" required>

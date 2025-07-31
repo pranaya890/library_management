@@ -8,60 +8,35 @@ All Students List
 {% block css %}
 <style>
         :root {
-            --nepal-crimson: #DC143C;
-            --nepal-blue: #003893;
-            --nepal-light-crimson: #FF6B8A;
-            --nepal-light-blue: #4A90E2;
-            --nepal-gold: #FFD700;
+            --primary-blue: #4682B4;
+            --light-blue: #87CEEB;
+            --dark-blue: #2F4F4F;
         }
 
         body {
-            background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+            background: white;
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: black;
         }
 
         .nepal-container {
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             margin: 2rem auto;
             padding: 2rem;
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--nepal-gold);
+            border: 2px solid var(--primary-blue);
         }
 
         .nepal-header {
-            background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
+            background: var(--primary-blue);
             color: white;
             padding: 2rem;
             border-radius: 15px;
             margin-bottom: 2rem;
             text-align: center;
             position: relative;
-            overflow: hidden;
-        }
-
-        .nepal-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255, 255, 255, 0.1) 10px,
-                rgba(255, 255, 255, 0.1) 20px
-            );
-            animation: shimmer 3s linear infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%); }
-            100% { transform: translateX(100%) translateY(100%); }
         }
 
         .nepal-header h1 {
@@ -78,7 +53,7 @@ All Students List
 
         .nepal-flag-icon {
             font-size: 2rem;
-            color: var(--nepal-gold);
+            color: white;
         }
 
         .nepal-table {
@@ -88,7 +63,7 @@ All Students List
         }
 
         .nepal-table thead {
-            background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-crimson));
+            background: var(--primary-blue);
             color: white;
         }
 
@@ -108,44 +83,32 @@ All Students List
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--nepal-gold);
+            background: var(--dark-blue);
         }
 
         .nepal-table tbody tr {
-            transition: all 0.3s ease;
             background: white;
         }
 
         .nepal-table tbody tr:nth-child(even) {
-            background: rgba(220, 20, 60, 0.05);
-        }
-
-        .nepal-table tbody tr:hover {
-            background: linear-gradient(45deg, rgba(220, 20, 60, 0.1), rgba(0, 56, 147, 0.1));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: #f8f9fa;
         }
 
         .nepal-table tbody td {
             padding: 1rem;
             vertical-align: middle;
-            border-color: rgba(220, 20, 60, 0.1);
+            border-color: rgba(70, 130, 180, 0.1);
             position: relative;
-        }
-
-        .nepal-table tbody tr:hover td {
-            color: var(--nepal-blue);
-            font-weight: 500;
+            color: black;
         }
 
         .nepal-btn-delete {
-            background: linear-gradient(45deg, var(--nepal-crimson), #FF1744);
-            border: 2px solid var(--nepal-gold);
+            background: var(--primary-blue);
+            border: 2px solid var(--dark-blue);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 25px;
             text-decoration: none;
-            transition: all 0.3s ease;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -154,16 +117,8 @@ All Students List
             gap: 0.5rem;
         }
 
-        .nepal-btn-delete:hover {
-            background: linear-gradient(45deg, #FF1744, var(--nepal-crimson));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
-            color: white;
-            border-color: white;
-        }
-
         .serial-number {
-            background: linear-gradient(45deg, var(--nepal-blue), var(--nepal-crimson));
+            background: var(--primary-blue);
             color: white;
             border-radius: 50%;
             width: 35px;
@@ -177,20 +132,20 @@ All Students List
 
         .student-name {
             font-weight: 600;
-            color: var(--nepal-blue);
+            color: black;
         }
 
         .student-id {
             font-family: monospace;
-            background: rgba(0, 56, 147, 0.1);
+            background: rgba(70, 130, 180, 0.1);
             padding: 0.25rem 0.5rem;
             border-radius: 10px;
-            color: var(--nepal-blue);
+            color: black;
             font-weight: bold;
         }
 
         .student-email {
-            color: var(--nepal-crimson);
+            color: black;
             font-style: italic;
         }
 
@@ -199,19 +154,13 @@ All Students List
             top: 20px;
             right: 20px;
             font-size: 3rem;
-            color: var(--nepal-gold);
+            color: var(--light-blue);
             opacity: 0.3;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.1); }
         }
 
         .branch-badge {
-            background: linear-gradient(45deg, var(--nepal-light-blue), var(--nepal-blue));
-            color: white;
+            background: var(--light-blue);
+            color: black;
             padding: 0.25rem 0.75rem;
             border-radius: 15px;
             font-size: 0.85rem;
@@ -219,7 +168,7 @@ All Students List
         }
 
         .class-badge {
-            background: linear-gradient(45deg, var(--nepal-light-crimson), var(--nepal-crimson));
+            background: var(--primary-blue);
             color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 15px;
@@ -228,12 +177,12 @@ All Students List
         }
 
         .roll-number {
-            background: var(--nepal-gold);
-            color: var(--nepal-blue);
+            background: var(--light-blue);
+            color: black;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-weight: bold;
-            border: 2px solid var(--nepal-blue);
+            border: 2px solid var(--primary-blue);
         }
 
         @media (max-width: 768px) {

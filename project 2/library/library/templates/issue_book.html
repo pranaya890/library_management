@@ -8,34 +8,36 @@ Issue Book
 {% block css %}
 <style>
     :root {
-        --nepal-crimson: #DC143C;
-        --nepal-blue: #003893;
-        --nepal-white: #FFFFFF;
-        --nepal-light-crimson: #E6476F;
-        --nepal-dark-blue: #002570;
-        --nepal-gold: #FFD700;
+        --primary-blue: #4682B4;
+        --dark-blue: #2F4F4F;
+        --light-blue: #E6F0FA;
+        --white: #FFFFFF;
+        --black: #000000;
+        --gray: #666666;
+        --light-gray: #F8F9FA;
+        --shadow-color: rgba(70, 130, 180, 0.3);
     }
 
     body {
-        background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+        background: var(--white);
         min-height: 100vh;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--black);
     }
 
-    .nepal-container {
-        background: rgba(255, 255, 255, 0.95);
+    .container {
+        background: var(--white);
         border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 20px 40px var(--shadow-color);
         padding: 3rem;
         margin: 2rem auto;
-        backdrop-filter: blur(10px);
-        border: 2px solid var(--nepal-gold);
+        border: 2px solid var(--primary-blue);
         max-width: 600px;
     }
 
-    .nepal-header {
-        background: linear-gradient(45deg, var(--nepal-crimson), var(--nepal-blue));
-        color: white;
+    .header {
+        background: var(--primary-blue);
+        color: var(--white);
         padding: 2rem;
         border-radius: 15px;
         margin-bottom: 2rem;
@@ -44,29 +46,7 @@ Issue Book
         overflow: hidden;
     }
 
-    .nepal-header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 10px,
-            rgba(255, 255, 255, 0.1) 10px,
-            rgba(255, 255, 255, 0.1) 20px
-        );
-        animation: shimmer 3s linear infinite;
-    }
-
-    @keyframes shimmer {
-        0% { transform: translateX(-100%) translateY(-100%); }
-        100% { transform: translateX(100%) translateY(100%); }
-    }
-
-    .nepal-header h1 {
+    .header h1 {
         position: relative;
         z-index: 2;
         margin: 0;
@@ -78,9 +58,9 @@ Issue Book
         gap: 1rem;
     }
 
-    .nepal-flag-icon {
+    .icon {
         font-size: 2rem;
-        color: var(--nepal-gold);
+        color: var(--white);
     }
 
     .form-group {
@@ -89,7 +69,7 @@ Issue Book
     }
 
     .form-group label {
-        color: var(--nepal-dark-blue);
+        color: var(--black);
         font-weight: 600;
         margin-bottom: 0.5rem;
         display: block;
@@ -99,38 +79,32 @@ Issue Book
     }
 
     .form-control, .form-select {
-        border: 2px solid rgba(0, 56, 147, 0.2);
+        border: 2px solid var(--primary-blue);
         border-radius: 10px;
         padding: 0.75rem 1rem;
         font-size: 1rem;
-        transition: all 0.3s ease;
-        background: var(--nepal-white);
-        color: var(--nepal-dark-blue);
+        background: var(--white);
+        color: var(--black);
         width: 100%;
     }
 
     .form-control:focus, .form-select:focus {
-        border-color: var(--nepal-crimson);
-        box-shadow: 0 0 0 0.2rem rgba(220, 20, 60, 0.25);
-        background: var(--nepal-white);
+        border-color: var(--dark-blue);
+        box-shadow: 0 0 0 0.2rem var(--shadow-color);
+        background: var(--white);
         outline: none;
     }
 
-    .form-control:hover, .form-select:hover {
-        border-color: var(--nepal-light-crimson);
-    }
-
-    .nepal-btn-issue {
-        background: linear-gradient(135deg, var(--nepal-crimson), var(--nepal-light-crimson));
-        border: 2px solid var(--nepal-gold);
+    .btn-issue {
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
         border-radius: 25px;
         padding: 0.75rem 2rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: var(--nepal-white);
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+        color: var(--white);
+        box-shadow: 0 4px 15px var(--shadow-color);
         width: 100%;
         margin-top: 1rem;
         cursor: pointer;
@@ -140,75 +114,24 @@ Issue Book
         gap: 0.5rem;
     }
 
-    .nepal-btn-issue:hover {
-        background: linear-gradient(135deg, var(--nepal-blue), var(--nepal-dark-blue));
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 56, 147, 0.4);
-        color: var(--nepal-white);
-        border-color: white;
+    .btn-issue:hover {
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--white);
+        transform: none;
+        box-shadow: 0 4px 15px var(--shadow-color);
     }
 
-    .nepal-btn-issue:active {
-        transform: translateY(0);
+    .btn-issue:active {
+        background: var(--primary-blue);
+        border: 2px solid var(--primary-blue);
+        color: var(--white);
+        transform: none;
     }
 
-    /* Nepal flag decorative elements */
-    .nepal-decoration {
-        position: fixed;
-        top: 75px;
-        right: 20px;
-        width: 60px;
-        height: 80px;
-        background: var(--nepal-crimson);
-        clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
-        z-index: 1000;
-    }
-
-    .nepal-decoration::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 20px;
-        height: 20px;
-        background: var(--nepal-white);
-        border-radius: 50%;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
-
-    .nepal-decoration-left {
-        position: fixed;
-        top: 75px;
-        left: 20px;
-        width: 60px;
-        height: 80px;
-        background: var(--nepal-blue);
-        clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
-        z-index: 1000;
-    }
-
-    .nepal-decoration-left::before {
-        content: '📚';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 16px;
-    }
-
-    /* Form icon styling */
-    .form-group::before {
-        content: '';
-        position: absolute;
-        left: 15px;
-        top: 45px;
-        width: 20px;
-        height: 20px;
-        background: var(--nepal-light-crimson);
-        border-radius: 50%;
-        opacity: 0.2;
-        z-index: 1;
+    .btn-issue:focus {
+        outline: 2px solid var(--primary-blue);
+        outline-offset: 2px;
     }
 
     /* Loading animation */
@@ -223,7 +146,7 @@ Issue Book
         }
     }
 
-    .nepal-container {
+    .container {
         animation: fadeInUp 0.8s ease-out;
     }
 
@@ -240,63 +163,59 @@ Issue Book
 
     /* Responsive design */
     @media (max-width: 768px) {
-        .nepal-container {
+        .container {
             margin: 1rem;
             padding: 2rem 1.5rem;
         }
-        
-        .nepal-decoration,
-        .nepal-decoration-left {
-            display: none;
-        }
 
-        .nepal-header h1 {
+        .header h1 {
             font-size: 1.5rem;
         }
     }
 
     /* Success message styling */
     .alert-success {
-        background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), rgba(0, 56, 147, 0.1));
-        border: 2px solid var(--nepal-crimson);
+        background: var(--light-blue);
+        border: 2px solid var(--primary-blue);
         border-radius: 15px;
-        color: var(--nepal-dark-blue);
+        color: var(--black);
         padding: 1rem;
         margin-bottom: 1.5rem;
         animation: fadeInUp 0.5s ease-out;
     }
 
-    .mountain-decoration {
-        position: absolute;
-        top: 75px;
-        right: 20px;
-        font-size: 3rem;
-        color: var(--nepal-gold);
-        opacity: 0.3;
-        animation: pulse 2s infinite;
+    /* Remove any additional hover effects */
+    * {
+        transition: none !important;
     }
 
-    @keyframes pulse {
-        0%, 100% { opacity: 0.3; transform: scale(1); }
-        50% { opacity: 0.6; transform: scale(1.1); }
+    /* Override Bootstrap button styles */
+    .btn-close:hover {
+        opacity: 1;
+        transform: none;
+    }
+
+    /* Ensure form elements don't have hover effects */
+    .form-control:hover, .form-select:hover {
+        border-color: var(--primary-blue);
+        background: var(--white);
+        transform: none;
+    }
+
+    /* Error message styling */
+    .text-danger {
+        color: #dc3545 !important;
     }
 </style>
 {% endblock %}
 
 {% block body %}
-    <!-- Nepal flag decorative elements -->
-    <div class="nepal-decoration"></div>
-    <div class="nepal-decoration-left"></div>
-    <div class="mountain-decoration">
-        <i class="fas fa-mountain"></i>
-    </div>
-
-    <div class="container nepal-container">
-        <div class="nepal-header">
+    <div class="container">
+        <div class="header">
             <h1>
-                <i class="fas fa-book-reader nepal-flag-icon"></i>
+                <i class="fas fa-book-reader icon"></i>
                 Issue Book
-                <i class="fas fa-hand-holding-heart nepal-flag-icon"></i>
+                <i class="fas fa-hand-holding-heart icon"></i>
             </h1>
         </div>
         
@@ -329,7 +248,7 @@ Issue Book
             </div>
             {% endfor %}
             
-            <button type="submit" class="nepal-btn-issue">
+            <button type="submit" class="btn-issue">
                 <i class="fas fa-book me-2"></i>Issue Book
             </button>
         </form>
@@ -345,19 +264,4 @@ Issue Book
         });
     </script>
     {% endif %}
-    
-    <script>
-        // Add form enhancement
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.form-control, .form-select').forEach(function(element) {
-                element.addEventListener('focus', function() {
-                    this.parentElement.parentElement.style.transform = 'scale(1.02)';
-                });
-                
-                element.addEventListener('blur', function() {
-                    this.parentElement.parentElement.style.transform = 'scale(1)';
-                });
-            });
-        });
-    </script>
 {% endblock %}

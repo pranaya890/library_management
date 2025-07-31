@@ -8,32 +8,35 @@ All Books List
 {% block css %}
 <style>
         :root {
-            --nepal-crimson: #DC143C;
-            --nepal-blue: #003893;
-            --nepal-white: #FFFFFF;
-            --nepal-light-crimson: #E6476F;
-            --nepal-dark-blue: #002570;
+            --primary-blue: #4682B4;
+            --dark-blue: #2F4F4F;
+            --light-blue: #E6F0FA;
+            --white: #FFFFFF;
+            --black: #000000;
+            --gray: #666666;
+            --light-gray: #F8F9FA;
+            --shadow-color: rgba(70, 130, 180, 0.3);
         }
 
         body {
-            background: linear-gradient(135deg, var(--nepal-crimson) 0%, var(--nepal-blue) 100%);
+            background: var(--white);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--black);
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--white);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 40px var(--shadow-color);
             padding: 2rem;
             margin-top: 2rem;
             margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--primary-blue);
         }
 
         h1 {
-            color: var(--nepal-crimson);
+            color: var(--primary-blue);
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
@@ -48,21 +51,21 @@ All Books List
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, var(--nepal-crimson), var(--nepal-blue));
+            background: var(--primary-blue);
             border-radius: 2px;
         }
 
         .table {
-            background: var(--nepal-white);
+            background: var(--white);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: none;
+            box-shadow: 0 10px 25px var(--shadow-color);
+            border: 2px solid var(--primary-blue);
         }
 
         .table thead th {
-            background: linear-gradient(135deg, var(--nepal-crimson), var(--nepal-light-crimson));
-            color: var(--nepal-white);
+            background: var(--primary-blue);
+            color: var(--white);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -79,22 +82,19 @@ All Books List
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--nepal-blue);
+            background: var(--dark-blue);
         }
 
         .table tbody tr {
-            transition: all 0.3s ease;
             border: none;
         }
 
-        .table tbody tr:hover {
-            background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), rgba(0, 56, 147, 0.1));
-            transform: scale(1.01);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .table tbody tr:nth-child(even) {
+            background-color: var(--light-blue);
         }
 
-        .table tbody tr:nth-child(even) {
-            background-color: rgba(0, 56, 147, 0.05);
+        .table tbody tr:nth-child(odd) {
+            background-color: var(--white);
         }
 
         .table tbody td {
@@ -102,82 +102,50 @@ All Books List
             text-align: center;
             vertical-align: middle;
             border: none;
-            border-bottom: 1px solid rgba(0, 56, 147, 0.1);
+            border-bottom: 1px solid var(--primary-blue);
             font-weight: 500;
-            color: var(--nepal-dark-blue);
+            color: var(--black);
         }
 
         .table tbody td:first-child {
             font-weight: bold;
-            color: var(--nepal-crimson);
+            color: var(--primary-blue);
             font-size: 1.1em;
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, var(--nepal-crimson), #B91C3C);
-            border: none;
+            background: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            color: var(--white);
             border-radius: 25px;
             padding: 0.5rem 1.5rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+            box-shadow: 0 4px 15px var(--shadow-color);
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-danger:hover {
-            background: linear-gradient(135deg, #B91C3C, var(--nepal-crimson));
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
+            background: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            color: var(--white);
+            text-decoration: none;
+            transform: none;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .btn-danger:focus {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
         }
 
         .btn-danger:active {
-            transform: translateY(0);
-        }
-
-        /* Nepal flag decorative elements */
-        .nepal-decoration {
-            position: fixed;
-            top: 40px;
-            right: 20px;
-            width: 60px;
-            height: 80px;
-            background: var(--nepal-crimson);
-            clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
-            z-index: 1000;
-        }
-
-        .nepal-decoration::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            background: var(--nepal-white);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .nepal-decoration-left {
-            position: fixed;
-            top: 40px;
-            left: 20px;
-            width: 60px;
-            height: 80px;
-            background: var(--nepal-blue);
-            clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
-            z-index: 1000;
-        }
-
-        .nepal-decoration-left::before {
-            content: '🏔️';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 16px;
+            background: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            color: var(--white);
+            transform: none;
         }
 
         /* Responsive design */
@@ -189,11 +157,6 @@ All Books List
             
             .table {
                 font-size: 0.9rem;
-            }
-            
-            .nepal-decoration,
-            .nepal-decoration-left {
-                display: none;
             }
         }
 
@@ -223,14 +186,25 @@ All Books List
         .table tbody tr:nth-child(3) { animation-delay: 0.3s; }
         .table tbody tr:nth-child(4) { animation-delay: 0.4s; }
         .table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Icon styling */
+        .fas {
+            color: var(--white);
+        }
+
+        .table tbody .fas {
+            color: var(--primary-blue);
+        }
+
+        /* Additional styling for better readability */
+        .table-responsive {
+            border-radius: 15px;
+            overflow: hidden;
+        }
 </style>
 {% endblock %}
 
 {% block body %}
-    <!-- Nepal flag decorative elements -->
-    <div class="nepal-decoration"></div>
-    <div class="nepal-decoration-left"></div>
-
     <div class="container mt-4">
         <h1 class="text-center">
             <i class="fas fa-book-open me-3"></i>
@@ -239,7 +213,7 @@ All Books List
         </h1>
         
         <div class="table-responsive">
-            <table class="table table-hover" id="example">
+            <table class="table" id="example">
                 <thead>
                     <tr>
                         <th><i class="fas fa-hashtag me-2"></i>Sr.No</th>

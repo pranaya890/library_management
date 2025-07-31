@@ -1,14 +1,37 @@
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+         
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-
+         
     <title>{% block title %} {% endblock %}</title>
     {% block css %}
+    <style>
+      body {
+        background-color: white;
+        color: black;
+      }
+      
+      .navbar {
+        background-color: #4682B4 !important; /* Darker steel blue background */
+      }
+             
+      .navbar-brand, .nav-link {
+        color: white !important; /* White text for navbar */
+      }
+             
+      .navbar-brand:hover, .nav-link:hover {
+        color: white !important; /* Keep white on hover */
+        background-color: rgba(255, 255, 255, 0.1) !important; /* Subtle hover effect */
+        text-decoration: none !important; /* No underline */
+      }
+             
+      .navbar-toggler-icon {
+        filter: brightness(0) invert(1); /* Makes hamburger icon white */
+      }
+    </style>
     {% endblock %}
   </head>
   <body>
@@ -46,4 +69,4 @@
     {% block js %}
     {% endblock %}
   </body>
-</html> 
+</html>

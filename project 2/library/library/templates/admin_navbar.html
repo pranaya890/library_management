@@ -11,6 +11,69 @@
 
     <title>{% block title %} {% endblock %}</title>
     {% block css %}
+    <style>
+      body {
+        background-color: white;
+        color: black;
+      }
+      
+      .navbar {
+        background-color: #4682B4 !important; /* Darker steel blue background */
+      }
+             
+      .navbar-brand, .nav-link {
+        color: white !important; /* White text for navbar */
+      }
+             
+      .navbar-brand:hover, .nav-link:hover {
+        color: white !important; /* Keep white on hover */
+        background-color: rgba(255, 255, 255, 0.1) !important; /* Subtle hover effect */
+        text-decoration: none !important; /* No underline */
+      }
+             
+      .navbar-toggler-icon {
+        filter: brightness(0) invert(1); /* Makes hamburger icon white */
+      }
+
+      /* Dropdown menu styling */
+      .dropdown-menu {
+        background-color: white;
+        border: 1px solid #4682B4;
+      }
+
+      .dropdown-item {
+        color: black !important;
+      }
+
+      .dropdown-item:hover {
+        background-color: #4682B4;
+        color: white !important;
+      }
+
+      /* DataTables styling to match theme */
+      .dataTables_wrapper {
+        color: black;
+      }
+
+      .dataTables_wrapper .dataTables_length,
+      .dataTables_wrapper .dataTables_filter,
+      .dataTables_wrapper .dataTables_info,
+      .dataTables_wrapper .dataTables_paginate {
+        color: black;
+      }
+
+      /* Button styling */
+      .dt-buttons .dt-button {
+        background-color: #4682B4;
+        color: white;
+        border: 1px solid #4682B4;
+      }
+
+      .dt-buttons .dt-button:hover {
+        background-color: #5a9bd4;
+        color: white;
+      }
+    </style>
     {% endblock %}
   </head>
   <body>
