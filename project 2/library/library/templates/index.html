@@ -8,14 +8,7 @@ Khowpa Library Management System
 {% block css %}
 <style>
     :root {
-        --nepal-crimson: #DC143C;
-        --nepal-blue: #003893;
-        --nepal-white: #FFFFFF;
-        --nepal-light-crimson: #E6476F;
-        --nepal-dark-blue: #002570;
-        --nepal-gold: #FFD700;
-        --nepal-light-blue: #4A90E2;
-        --dark-steel-blue: #4682B4;
+        --primary-blue: #4682B4;
     }
 
     body {
@@ -27,21 +20,17 @@ Khowpa Library Management System
 
     .hero-section {
         background: white;
-        border-radius: 20px;
-        padding: 3rem;
+        border-radius: 10px;
+        padding: 2rem;
         margin: 2rem 0;
-        border: 2px solid var(--nepal-gold);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        position: relative;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .hero-section h1 {
         color: black;
-        font-weight: 800;
+        font-weight: 600;
         margin-bottom: 1.5rem;
-        position: relative;
-        z-index: 2;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .hero-section p {
@@ -49,241 +38,99 @@ Khowpa Library Management System
         font-size: 1.1rem;
         line-height: 1.6;
         margin-bottom: 2rem;
-        position: relative;
-        z-index: 2;
-        font-weight: 500;
+        font-weight: 400;
     }
 
     .register-btn {
-        background: var(--dark-steel-blue);
-        border: 2px solid var(--nepal-gold);
-        padding: 1rem 2.5rem;
-        border-radius: 50px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: none !important;
-        box-shadow: 0 8px 25px rgba(70, 130, 180, 0.3);
-        color: var(--nepal-white);
-        position: relative;
-        z-index: 2;
+        background: var(--primary-blue);
+        border: 1px solid var(--primary-blue);
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        color: white;
     }
 
     .register-btn:hover {
-        transform: none !important;
-        box-shadow: 0 8px 25px rgba(70, 130, 180, 0.3) !important;
-        background: var(--dark-steel-blue) !important;
-        border-color: var(--nepal-gold) !important;
-        color: var(--nepal-white) !important;
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: white;
     }
 
     .portal-section {
-        background: var(--dark-steel-blue);
-        border-radius: 20px;
+        background: white;
+        border-radius: 10px;
         padding: 2rem;
-        backdrop-filter: blur(10px);
-        border: 2px solid var(--nepal-gold);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         margin: 1rem 0;
     }
 
     .portal-card {
         text-align: center;
         padding: 2rem;
-        transition: none !important;
-        border-radius: 15px;
+        border-radius: 8px;
         background: white;
-        border: 2px solid rgba(70, 130, 180, 0.2);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .portal-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(70, 130, 180, 0.1), transparent);
-        transition: none !important;
-    }
-
-    .portal-card:hover::before {
-        left: -100% !important;
-    }
-
-    .portal-card:hover {
-        transform: none !important;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
-        background: white !important;
-        border-color: rgba(70, 130, 180, 0.2) !important;
+        border: 1px solid #eee;
     }
 
     .portal-image {
         width: 50%;
         height: auto;
         max-width: 200px;
-        border-radius: 15px;
+        border-radius: 8px;
         margin-bottom: 2rem;
-        transition: none !important;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        border: 3px solid var(--nepal-gold);
-        position: relative;
-        z-index: 2;
-    }
-
-    .portal-card:hover .portal-image {
-        transform: none !important;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
-        border-color: var(--nepal-gold) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
     }
 
     .portal-btn {
-        background: var(--dark-steel-blue);
-        border: 2px solid var(--nepal-crimson);
+        background: var(--primary-blue);
+        border: 1px solid var(--primary-blue);
         color: white;
         padding: 1rem 2rem;
-        border-radius: 50px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: none !important;
+        border-radius: 5px;
+        font-weight: 500;
         min-width: 150px;
-        position: relative;
-        z-index: 2;
     }
 
     .portal-btn:hover {
-        background: var(--dark-steel-blue) !important;
-        border-color: var(--nepal-crimson) !important;
-        color: white !important;
-        transform: none !important;
-        box-shadow: none !important;
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: white;
     }
 
     .container-wrapper {
         background: white;
-        backdrop-filter: blur(20px);
-        border-radius: 25px;
+        border-radius: 10px;
         padding: 2rem;
         margin: 2rem 0;
-        border: 2px solid rgba(255, 215, 0, 0.5);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .bg-light {
-        background: transparent !important;
+        background: white !important;
     }
 
-    /* Updated text colors in portal cards */
     .portal-card h4 {
-        color: var(--dark-steel-blue) !important;
-        font-weight: bold;
+        color: black;
+        font-weight: 600;
         margin-bottom: 1rem;
     }
 
     .portal-card p {
-        color: var(--dark-steel-blue) !important;
+        color: black;
         margin-bottom: 1.5rem;
-    }
-
-    /* Nepal decorative elements */
-    .nepal-decoration {
-        position: fixed;
-        top: 40px;
-        right: 20px;
-        width: 60px;
-        height: 80px;
-        background: var(--nepal-crimson);
-        clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
-        z-index: 1000;
-    }
-
-    .nepal-decoration::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 20px;
-        height: 20px;
-        background: var(--nepal-white);
-        border-radius: 50%;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
-
-    .nepal-decoration-left {
-        position: fixed;
-        top: 40px;
-        left: 20px;
-        width: 60px;
-        height: 80px;
-        background: var(--nepal-blue);
-        clip-path: polygon(0 0, 100% 0, 100% 60%, 80% 100%, 0 60%);
-        z-index: 1000;
-    }
-
-    .nepal-decoration-left::before {
-        content: '📚';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 16px;
-    }
-
-    .mountain-decoration {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        font-size: 4rem;
-        color: var(--nepal-gold);
-        opacity: 0.3;
-        animation: none !important;
-        z-index: 1000;
-    }
-
-    .flag-decoration {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        font-size: 3rem;
-        color: var(--nepal-gold);
-        opacity: 0.4;
-        animation: none !important;
-        z-index: 1000;
-    }
-
-    /* Floating particles effect */
-    .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .particle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: var(--nepal-gold);
-        border-radius: 50%;
-        opacity: 0.6;
-        animation: none !important;
     }
 
     @media (max-width: 768px) {
         .hero-section {
-            padding: 2rem 1.5rem;
+            padding: 1.5rem;
             margin: 1rem 0;
         }
         
         .hero-section h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
         
         .portal-card {
@@ -293,55 +140,22 @@ Khowpa Library Management System
         .portal-image {
             width: 60%;
         }
-
-        .nepal-decoration,
-        .nepal-decoration-left,
-        .mountain-decoration,
-        .flag-decoration {
-            display: none;
-        }
     }
 </style>
 {% endblock %}
 
 {% block body %}
-<!-- Nepal decorative elements -->
-<div class="nepal-decoration"></div>
-<div class="nepal-decoration-left"></div>
-<div class="mountain-decoration">
-    <i class="fas fa-mountain"></i>
-</div>
-<div class="flag-decoration">
-    <i class="fas fa-flag"></i>
-</div>
-
-<!-- Floating particles -->
-<div class="particles">
-    <div class="particle" style="left: 10%;"></div>
-    <div class="particle" style="left: 20%;"></div>
-    <div class="particle" style="left: 30%;"></div>
-    <div class="particle" style="left: 40%;"></div>
-    <div class="particle" style="left: 50%;"></div>
-    <div class="particle" style="left: 60%;"></div>
-    <div class="particle" style="left: 70%;"></div>
-    <div class="particle" style="left: 80%;"></div>
-    <div class="particle" style="left: 90%;"></div>
-</div>
-
 <div class="p-4 bg-light">
     <div class="container-fluid py-3">
         <div class="hero-section">
             <h1 class="display-5 fw-bold">
-                <i class="fas fa-flag me-3" style="color: var(--nepal-gold);"></i>
                 Welcome to Khowpa Library Management System
-                <i class="fas fa-book ms-3" style="color: var(--nepal-gold);"></i>
             </h1>
             <p class="col-md-8 fs-4">
-                <i class="fas fa-mountain me-2" style="color: var(--nepal-crimson);"></i>
-                Your gateway to knowledge and learning in the heart of Nepal. Register as a student and issue books through the admin. Books must be returned within 14 days or a fine of Rs 5 will be charged per day until returned.
+                Your gateway to knowledge and learning. Register as a student and issue books through the admin. Books must be returned within 14 days or a fine of Rs 5 will be charged per day until returned.
             </p>
             <a href="/student_registration/" class="btn btn-primary btn-lg register-btn">
-                <i class="fas fa-user-graduate me-2"></i>Register as Student
+                Register as Student
             </a>
         </div>
     </div>
@@ -354,15 +168,10 @@ Khowpa Library Management System
                 <div class="col-lg-6">
                     <div class="portal-card">
                         <img src="{% static 'admin.png' %}" class="portal-image" alt="Admin Portal">
-                        <h4>
-                            <i class="fas fa-user-shield me-2" style="color: var(--nepal-crimson);"></i>
-                            Admin Portal
-                        </h4>
-                        <p>
-                            Manage books, students, and library operations
-                        </p>
+                        <h4>Admin Portal</h4>
+                        <p>Manage books, students, and library operations</p>
                         <a class="btn btn-outline-primary btn-lg portal-btn" href="/admin_login/">
-                            <i class="fas fa-sign-in-alt me-2"></i>Admin Login
+                            Admin Login
                         </a>
                     </div>
                 </div>
@@ -370,15 +179,10 @@ Khowpa Library Management System
                 <div class="col-lg-6">
                     <div class="portal-card">
                         <img src="{% static 'students.png' %}" class="portal-image" alt="Student Portal">
-                        <h4>
-                            <i class="fas fa-graduation-cap me-2" style="color: var(--nepal-crimson);"></i>
-                            Student Portal
-                        </h4>
-                        <p>
-                            Access your account and view issued books
-                        </p>
+                        <h4>Student Portal</h4>
+                        <p>Access your account and view issued books</p>
                         <a class="btn btn-outline-primary btn-lg portal-btn" href="/student_login/">
-                            <i class="fas fa-book-reader me-2"></i>Student Login
+                            Student Login
                         </a>
                     </div>
                 </div>
@@ -386,11 +190,4 @@ Khowpa Library Management System
         </div>
     </div>
 </div>
-
-<script>
-// Script modified to not add dynamic particles or animations
-document.addEventListener('DOMContentLoaded', function() {
-    // No dynamic content added
-});
-</script>
 {% endblock %}

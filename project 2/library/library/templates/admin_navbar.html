@@ -12,33 +12,37 @@
     <title>{% block title %} {% endblock %}</title>
     {% block css %}
     <style>
+      :root {
+        --primary-blue: #4682B4;
+      }
+
       body {
         background-color: white;
         color: black;
       }
       
       .navbar {
-        background-color: #4682B4 !important; /* Darker steel blue background */
+        background-color: var(--primary-blue) !important;
       }
              
       .navbar-brand, .nav-link {
-        color: white !important; /* White text for navbar */
+        color: white !important;
       }
              
       .navbar-brand:hover, .nav-link:hover {
-        color: white !important; /* Keep white on hover */
-        background-color: rgba(255, 255, 255, 0.1) !important; /* Subtle hover effect */
-        text-decoration: none !important; /* No underline */
+        color: white !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        text-decoration: none !important;
       }
              
       .navbar-toggler-icon {
-        filter: brightness(0) invert(1); /* Makes hamburger icon white */
+        filter: brightness(0) invert(1);
       }
 
       /* Dropdown menu styling */
       .dropdown-menu {
         background-color: white;
-        border: 1px solid #4682B4;
+        border: 1px solid var(--primary-blue);
       }
 
       .dropdown-item {
@@ -46,7 +50,7 @@
       }
 
       .dropdown-item:hover {
-        background-color: #4682B4;
+        background-color: var(--primary-blue);
         color: white !important;
       }
 
@@ -64,9 +68,9 @@
 
       /* Button styling */
       .dt-buttons .dt-button {
-        background-color: #4682B4;
+        background-color: var(--primary-blue);
         color: white;
-        border: 1px solid #4682B4;
+        border: 1px solid var(--primary-blue);
       }
 
       .dt-buttons .dt-button:hover {

@@ -5,259 +5,134 @@
 
 {% block css %}
 <style>
-    /* Steel Blue Theme */
     :root {
         --primary-blue: #4682B4;
-        --dark-blue: #2F4F4F;
-        --light-blue: #E6F0FA;
-        --white: #FFFFFF;
-        --black: #000000;
-        --gray: #666666;
-        --light-gray: #F8F9FA;
-        --shadow-color: rgba(70, 130, 180, 0.3);
     }
     
     body {
-        background: var(--white);
+        background: white;
         min-height: 100vh;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: var(--black);
+        color: black;
     }
     
     .container {
-        background: var(--white);
-        border-radius: 20px;
-        box-shadow: 0 15px 35px var(--shadow-color);
-        padding: 50px;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        border: 2px solid var(--primary-blue);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 6px;
-        background: var(--primary-blue);
-    }
-    
-    .container::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 6px;
-        background: var(--primary-blue);
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid #ddd;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .page-title {
         text-align: center;
         color: var(--primary-blue);
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 40px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        position: relative;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
     }
     
     .subtitle {
         text-align: center;
-        color: var(--gray);
-        font-size: 1.2rem;
-        margin-bottom: 30px;
-        font-style: italic;
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
     }
     
     label {
-        color: var(--black) !important;
-        font-weight: bold !important;
-        margin-bottom: 10px;
+        color: black;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
         display: block;
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .form-control {
-        border: 2px solid var(--primary-blue);
-        border-radius: 12px;
-        padding: 15px 20px;
-        transition: all 0.3s ease;
-        background: var(--white);
+        border: 1px solid var(--primary-blue);
+        border-radius: 5px;
+        padding: 0.75rem;
+        background: white;
         font-size: 1rem;
-        color: var(--black);
+        color: black;
+        width: 100%;
     }
     
     .form-control:focus {
-        border-color: var(--dark-blue);
-        box-shadow: 0 0 0 0.3rem var(--shadow-color);
-        background: var(--white);
-        transform: translateY(-2px);
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 0.2rem rgba(70, 130, 180, 0.25);
+        background: white;
         outline: none;
     }
     
-    .form-control:hover {
-        border-color: var(--dark-blue);
-        background: var(--light-gray);
-    }
-    
     .form-control::placeholder {
-        color: var(--gray);
+        color: #666;
     }
     
     .btn-primary {
         background: var(--primary-blue);
-        border: 2px solid var(--primary-blue);
-        color: var(--white);
-        padding: 15px 40px;
-        border-radius: 30px;
-        font-weight: bold;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        box-shadow: 0 5px 15px var(--shadow-color);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .btn-primary::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        transition: left 0.5s;
-    }
-    
-    .btn-primary:hover::before {
-        left: 100%;
+        border: 1px solid var(--primary-blue);
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 5px;
+        font-weight: 500;
+        font-size: 1rem;
     }
     
     .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px var(--shadow-color);
-        color: var(--white);
-        background: var(--dark-blue);
-        border-color: var(--dark-blue);
-    }
-    
-    .btn-primary:active {
-        transform: translateY(-1px);
-    }
-    
-    .icon {
-        color: var(--primary-blue);
-        margin-right: 10px;
-        font-size: 1.2rem;
+        background: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: white;
     }
     
     .form-group {
-        margin-bottom: 25px;
-        position: relative;
-    }
-    
-    .form-group::before {
-        content: '';
-        position: absolute;
-        left: -10px;
-        top: 50%;
-        width: 4px;
-        height: 60%;
-        background: var(--primary-blue);
-        border-radius: 2px;
-        transform: translateY(-50%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .form-group:hover::before {
-        opacity: 1;
+        margin-bottom: 1.5rem;
     }
     
     .btn-container {
         text-align: center;
-        margin-top: 40px;
+        margin-top: 2rem;
     }
     
-    /* Floating elements */
-    .floating-decoration {
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        background: var(--primary-blue);
-        border-radius: 50%;
-        opacity: 0.15;
-        animation: float 6s ease-in-out infinite;
-    }
-    
-    .floating-decoration:nth-child(1) {
-        top: 10%;
-        left: 5%;
-        animation-delay: 0s;
-    }
-    
-    .floating-decoration:nth-child(2) {
-        top: 20%;
-        right: 10%;
-        animation-delay: 2s;
-    }
-    
-    .floating-decoration:nth-child(3) {
-        bottom: 30%;
-        left: 8%;
-        animation-delay: 4s;
-    }
-    
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-    }
-    
-    /* Success message styling */
     .success-message {
-        background: var(--light-blue);
-        border: 2px solid var(--primary-blue);
-        color: var(--black);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
         text-align: center;
-        font-weight: bold;
+        font-weight: 500;
     }
     
-    /* Additional styling for better contrast */
     .row {
         margin: 0;
     }
     
     .col-md-12 {
-        padding: 0 15px;
+        padding: 0;
     }
     
-    /* Focus states for accessibility */
-    .form-control:focus,
-    .btn-primary:focus {
-        outline: 2px solid var(--primary-blue);
-        outline-offset: 2px;
+    @media (max-width: 768px) {
+        .container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+        }
     }
 </style>
 {% endblock %}
 
 {% block body %}
 <div class="container">
-    <!-- Floating decorations -->
-    <div class="floating-decoration"></div>
-    <div class="floating-decoration"></div>
-    <div class="floating-decoration"></div>
-    
-    <h1 class="page-title">📚 Library Management System 📚</h1>
+    <h1 class="page-title">Library Management System</h1>
     <p class="subtitle">Add New Book to Collection</p>
     
     <form method="POST">
@@ -265,9 +140,7 @@
         
         <div class="row mt-4">
             <div class="form-group col-md-12">
-                <label>
-                    <span class="icon">📚</span>Book Name
-                </label>
+                <label>Book Name</label>
                 <input type="text" class="form-control mt-2" name="name" 
                        placeholder="Enter name of the Book" required>
             </div>
@@ -275,9 +148,7 @@
 
         <div class="row mt-4">
             <div class="form-group col-md-12">
-                <label>
-                    <span class="icon">✍️</span>Author Name
-                </label>
+                <label>Author Name</label>
                 <input type="text" class="form-control mt-2" name="author" 
                        placeholder="Enter name of the Author" required>
             </div>
@@ -285,9 +156,7 @@
 
         <div class="row mt-4">
             <div class="form-group col-md-12">
-                <label>
-                    <span class="icon">🔢</span>ISBN Number
-                </label>
+                <label>ISBN Number</label>
                 <input type="number" class="form-control mt-2" name="isbn" 
                        placeholder="Enter ISBN number of the book" required>
             </div>
@@ -295,9 +164,7 @@
 
         <div class="row mt-4">
             <div class="form-group col-md-12">
-                <label>
-                    <span class="icon">📖</span>Category
-                </label>
+                <label>Category</label>
                 <input type="text" class="form-control mt-2" name="category" 
                        placeholder="Enter Category of the book" required>
             </div>
@@ -305,7 +172,7 @@
         
         <div class="btn-container">
             <button type="submit" class="btn btn-primary">
-                📚 Add Book to Library
+                Add Book to Library
             </button>
         </div>
     </form>
@@ -313,7 +180,6 @@
 {% endblock %}
 
 {% block js %}
-<!-- Django template variables for JavaScript -->
 <script id="django-data" type="application/json">
 {
     "alert": {% if alert %}true{% else %}false{% endif %}
@@ -321,45 +187,27 @@
 </script>
 
 <script>
-    // Get Django data from JSON script
     var djangoData = JSON.parse(document.getElementById('django-data').textContent);
     
-    // Handle success message
     document.addEventListener('DOMContentLoaded', function() {
         if (djangoData.alert) {
-            // Create a beautiful success notification
             showSuccessMessage("Book is added successfully!");
             
-            // Redirect after showing the message
             setTimeout(function() {
                 window.location.href = "/view_books";
             }, 2000);
         }
     });
     
-    // Beautiful success message function
     function showSuccessMessage(message) {
-        // Create success notification
         var successDiv = document.createElement('div');
         successDiv.className = 'success-message';
-        successDiv.innerHTML = '✅ ' + message + ' Redirecting to book list...';
+        successDiv.innerHTML = message + ' Redirecting to book list...';
         
-        // Insert at the top of the container
         var container = document.querySelector('.container');
         container.insertBefore(successDiv, container.firstChild);
-        
-        // Add entrance animation
-        successDiv.style.opacity = '0';
-        successDiv.style.transform = 'translateY(-20px)';
-        successDiv.style.transition = 'all 0.5s ease';
-        
-        setTimeout(function() {
-            successDiv.style.opacity = '1';
-            successDiv.style.transform = 'translateY(0)';
-        }, 100);
     }
     
-    // Form validation enhancement
     document.querySelector('form').addEventListener('submit', function(e) {
         var inputs = this.querySelectorAll('input[required]');
         var allValid = true;
@@ -367,29 +215,15 @@
         inputs.forEach(function(input) {
             if (!input.value.trim()) {
                 input.style.borderColor = '#dc3545';
-                input.style.background = '#fff5f5';
                 allValid = false;
             } else {
                 input.style.borderColor = 'var(--primary-blue)';
-                input.style.background = 'var(--white)';
             }
         });
         
         if (!allValid) {
             e.preventDefault();
             alert('Please fill in all required fields.');
-        }
-    });
-    
-    // ISBN validation
-    document.querySelector('input[name="isbn"]').addEventListener('input', function() {
-        var isbn = this.value;
-        if (isbn.length > 0 && (isbn.length < 10 || isbn.length > 13)) {
-            this.style.borderColor = '#dc3545';
-            this.title = 'ISBN should be 10 or 13 digits';
-        } else {
-            this.style.borderColor = 'var(--primary-blue)';
-            this.title = '';
         }
     });
 </script>

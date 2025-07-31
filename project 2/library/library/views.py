@@ -135,6 +135,13 @@ def edit_profile(request):
         return render(request, "edit_profile.html", {'alert':alert})
     return render(request, "edit_profile.html")
 
+def return_book(request, myid):
+    # Remove the book from issued books using ISBN
+    issued_books = IssuedBook.objects.filter(isbn=myid)
+    issued_books.delete()
+    
+    return redirect("/view_issued_book")  # Redirect back to issued books page
+
 def delete_book(request, myid):
     books = Book.objects.filter(id=myid)
     books.delete()
@@ -222,6 +229,8 @@ def admin_login(request):
             alert = True
             return render(request, "admin_login.html", {'alert':alert})
     return render(request, "admin_login.html")
+
+
 
 def Logout(request):
     logout(request)
